@@ -1,8 +1,13 @@
 <template>
-    <div id="main">
-    <Map />
-        <Navigation/>
-    </div>
+    <v-app id="Header1">
+        <v-content>
+        <v-container fluid fill-height style="margin:0">
+            <Navigation/>
+            <Map/>
+
+        </v-container>
+        </v-content>
+    </v-app>
 </template>
 
 <script>
