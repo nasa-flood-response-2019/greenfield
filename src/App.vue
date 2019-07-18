@@ -2,15 +2,19 @@
     <div id="main">
     <h1>Hello</h1>
     <Map />
+        <Navigation/>
     </div>
 </template>
 
 <script>
     import Map from './components/Map.vue';
+    import Navigation from './components/Navigation.vue';
+
     export default {
         name: "App1",
         components: {
-            Map
+            Map,
+            Navigation
         }
     }
 </script>
