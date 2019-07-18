@@ -76,7 +76,8 @@
 <style scoped>
     #drawer{
         z-index: 500;
-        top: 50px;
+        position: absolute;
+        top: 55px;
         left: 0px;
 
     }
