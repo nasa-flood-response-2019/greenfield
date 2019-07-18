@@ -1,19 +1,13 @@
 <template>
-
     <div id="mapTexas"></div>
-
-
 </template>
-
 <script>
     import L from "leaflet";
     import * as esri from "esri-leaflet";
     import * as wmts from "leaflet-tilelayer-wmts";
-    //import tileLayerWMTS from 'leaflet-tilelayer-wmts';
     //import axios from 'axios';
     //import * as MakiMarkers from './scripts/Leaflet.MakiMarkers';
     import './scripts/utility';
-
     let movesMap;
     let esriAerialsLayer;
     let esriAerialsLabels;
@@ -23,9 +17,6 @@
     let geoJsonQPF_Day1;
     let geoJsonQPF_Day2;
     let maskingSentinelApr16;
-
-
-
     export default {
         name: "Map",
         // components: {
@@ -52,6 +43,7 @@
         },
         mounted(){
             //console.log(this.$store.state.count);
+            esriToposLayer = esri.basemapLayer("Topographic");
             esriAerialsLayer = esri.basemapLayer('Imagery',{attribution: "ESRI et al",hideLogo:"true"});
             esriAerialsLabels = esri.basemapLayer('ImageryLabels');
             esriStreetsLayer = esri.basemapLayer('Streets',{attribution: "ESRI et al",hideLogo:"true"});
@@ -72,11 +64,6 @@
                     esriToposLayer
                 ]
             });
-<<<<<<< HEAD
-            esriToposLayer = esri.basemapLayer("Topographic").addTo(movesMap);
-=======
->>>>>>> 40579b82634af1e97649ad1b0b900e383140f900
-
             /*            geoJsonQPF_Day1 = L.geoJson(qpfDay1,
                             {
                                 style: function(feature) {
@@ -104,9 +91,7 @@
                                         //break;
                                     }
                                 }
-
                             });
-
                         geoJsonQPF_Day2 = L.geoJson(qpfDay2,
                             {
                                 style: function(feature) {
@@ -134,9 +119,7 @@
                                         //break;
                                     }
                                 }
-
                             });*/
-
             let lineTornado = turf.lineString([[-95.402527,31.264172],[-95.39566,31.299382],[-95.354462,31.32754],[-95.333862,31.354517],[-95.310516,31.386175],
                 [-95.292664,31.407275],[-95.266571,31.429542],[-95.248718,31.455318],[-95.225372,31.488114],[-95.204773,31.517386],[-95.19516,31.527922],
                 [-95.185547,31.540797],[-95.175934,31.554841],[-95.169067,31.573563],[-95.159454,31.586432],[-95.145721,31.60046],[-95.126495,31.613335],
@@ -147,7 +130,6 @@
             let bbox = turf.bbox(polyFootprint);
             let bufferedTornadoTrack = turf.buffer(lineTornado,3,{units:'miles'});
             console.log(bufferedTornadoTrack);
-
             let maskedTrack = turf.mask(bufferedTornadoTrack,polyFootprint,{name:'Alto Mask'});
             maskedTrack.properties.name = 'Alto Mask';
             maskingSentinelApr16 = L.geoJSON(maskedTrack, {
@@ -175,18 +157,14 @@
             this.$eventHub.$on('toggleMaskTornado20190416', this.addRemoveMaskTornado);
         }
     }
-
-
     function resetMap(){
         movesMap.setView([32.3117, -99.77774], 6);
         movesMap.invalidateSize();
     }
-
     function redrawMap(){
         console.log('Here');
         movesMap.invalidateSize();
     }
-
     function getMapInfo(){
         const LatLngAry = [movesMap.getCenter().lat,movesMap.getCenter().lng];
         let mapInfoObj = {ZoomLevel:movesMap.getZoom(),LatLng:LatLngAry};
@@ -194,7 +172,6 @@
         //TODO:Convert to Vuex BAP 04-03-19
         this.$eventHub.$emit('returnedMapInfo',mapInfoObj);
     }
-
     function addRemoveMaskTornado(){
         if(movesMap.hasLayer(maskingSentinelApr16)){
             movesMap.removeLayer(maskingSentinelApr16);
@@ -202,7 +179,6 @@
             movesMap.addLayer(maskingSentinelApr16);
         }
     }
-
     function goToLocation(incomingObj){
         console.log("Go To Location");
         console.log(incomingObj);
@@ -212,7 +188,6 @@
         movesMap.setView(LatLngAry,incomingObj.ZoomLevel);
         movesMap.invalidateSize();
     }
-
     function goToBookmark(incomingBookmark){
         if(incomingBookmark==='seTx'){
             movesMap.setView([30.072659, -95.202026], 8);
@@ -227,7 +202,6 @@
         }
         movesMap.invalidateSize();
     }
-
     function toggleLayer(incomingLayer){
         //console.log(incomingLayer);
         //console.log(esriToposLayer);
@@ -235,7 +209,6 @@
             console.log(incomingLayer);
             if(!movesMap.hasLayer(esriToposLayer)){
                 movesMap.addLayer(esriToposLayer);
-
             }
             checkRemoveAerials();
             checkRemoveStreets();
@@ -304,52 +277,38 @@
                 }
             }
         }
-
     }
-
     function checkRemoveLabelsOnly(){
         if(movesMap.hasLayer(esriAerialsLabels)){
             movesMap.removeLayer(esriAerialsLabels);
         }
     }
-
     function checkRemoveAerials(){
         if(movesMap.hasLayer(esriAerialsLayer)){
             movesMap.removeLayer(esriAerialsLayer);
             movesMap.removeLayer(esriAerialsLabels);
         }
     }
-
     function checkRemoveStreets(){
         if(movesMap.hasLayer(esriStreetsLayer)){
             movesMap.removeLayer(esriStreetsLayer);
         }
     }
-
     function checkRemoveTopo(){
         if(movesMap.hasLayer(esriToposLayer)) {
             movesMap.removeLayer(esriToposLayer);
         }
     }
-
     function checkRemoveGoogleWMTS(){
         if(movesMap.hasLayer(googleImageryLayer)){
             movesMap.removeLayer(googleImageryLayer);
         }
         checkRemoveLabelsOnly();
     }
-
-
-
-
-
 </script>
-
 <style scoped>
     #mapTexas{
         width: 100%;
-        height: 100%;
-
+        height: inherit;
     }
-
 </style>
