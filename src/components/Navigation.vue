@@ -13,7 +13,7 @@
                     </v-list-tile-avatar>
 
                     <v-list-tile-content>
-                        <v-list-tile-title>NASA SEES Flood Response</v-list-tile-title>
+                        <v-list-tile-title>SEES Flood Response 2019</v-list-tile-title>
                     </v-list-tile-content>
 
                     <v-list-tile-action>

@@ -9,6 +9,7 @@
     import L from "leaflet";
     import * as esri from "esri-leaflet";
     //import * as wmts from "leaflet-tilelayer-wmts";
+    import tileLayerWMTS from 'leaflet-tilelayer-wmts';
     //import axios from 'axios';
     //import * as MakiMarkers from './scripts/Leaflet.MakiMarkers';
     import './scripts/utility';
@@ -343,7 +344,7 @@
 <style scoped>
     #mapTexas{
         width: 100%;
-        height: inherit;
+        height: 100%;
 
     }
 
