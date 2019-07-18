@@ -315,10 +315,6 @@
     }
     .leaflet-left .leaflet-control {
         margin-left: 3750% !important;
-<<<<<<< HEAD
-=======
-
->>>>>>> 3662b300805a8f1b0e83ffdc33604e7ce5a6b4db
     }
 
     .leaflet-top .leaflet-control {
