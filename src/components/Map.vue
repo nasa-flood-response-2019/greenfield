@@ -8,8 +8,8 @@
 <script>
     import L from "leaflet";
     import * as esri from "esri-leaflet";
-    //import * as wmts from "leaflet-tilelayer-wmts";
-    import tileLayerWMTS from 'leaflet-tilelayer-wmts';
+    import * as wmts from "leaflet-tilelayer-wmts";
+    //import tileLayerWMTS from 'leaflet-tilelayer-wmts';
     //import axios from 'axios';
     //import * as MakiMarkers from './scripts/Leaflet.MakiMarkers';
     import './scripts/utility';
@@ -52,7 +52,6 @@
         },
         mounted(){
             //console.log(this.$store.state.count);
-            esriToposLayer = esri.basemapLayer("Topographic");
             esriAerialsLayer = esri.basemapLayer('Imagery',{attribution: "ESRI et al",hideLogo:"true"});
             esriAerialsLabels = esri.basemapLayer('ImageryLabels');
             esriStreetsLayer = esri.basemapLayer('Streets',{attribution: "ESRI et al",hideLogo:"true"});
@@ -73,6 +72,8 @@
                     esriToposLayer
                 ]
             });
+            esriToposLayer = esri.basemapLayer("Topographic").addTo(movesMap);
+
             /*            geoJsonQPF_Day1 = L.geoJson(qpfDay1,
                             {
                                 style: function(feature) {
