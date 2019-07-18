@@ -310,6 +310,7 @@
     #mapTexas{
         width: 100%;
         height: inherit;
+        position: absolute;
         top: 30px;
         right: 0px;
     }
@@ -318,6 +319,6 @@
     }
 
     .leaflet-top .leaflet-control {
-        margin-top: 20px !important;
+        margin-top: 40px !important;
     }
 </style>
