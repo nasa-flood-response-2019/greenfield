@@ -1,9 +1,10 @@
 <template>
-    <v-navigation-drawer
+    <v-navigation-drawer id = "drawer"
             v-model="drawer"
             :mini-variant.sync="mini"
             hide-overlay
             stateless
+            v-bind:width="350"
     >
         <v-toolbar flat class="transparent">
             <v-list class="pa-0">
@@ -49,6 +50,7 @@
 </template>
 
 <script>
+    //import Header from './components/Header.vue';
     export default {
         name: "Navigation",
         data () {
@@ -69,5 +71,11 @@
 </script>
 
 <style scoped>
+    #drawer{
+        z-index: 500;
+        top: 0px;
+        left: 0px;
+
+    }
 
 </style>

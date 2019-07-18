@@ -3,6 +3,7 @@
         <v-content>
         <v-container fluid fill-height style="margin:0">
             <Navigation/>
+            <Header/>
             <Map/>
 
         </v-container>
@@ -12,13 +13,15 @@
 
 <script>
     import Map from './components/Map.vue';
+    import Header from './components/Header.vue';
     import Navigation from './components/Navigation.vue';
 
     export default {
         name: "App1",
         components: {
             Map,
-            Navigation
+            Navigation,
+            Header
         }
     }
 </script>
