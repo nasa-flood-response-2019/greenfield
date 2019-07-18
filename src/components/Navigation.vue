@@ -9,11 +9,11 @@
             <v-list class="pa-0">
                 <v-list-tile avatar>
                     <v-list-tile-avatar>
-                        <img src="https://randomuser.me/api/portraits/men/85.jpg">
+                        <img src="https://www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwiSlMuRxb3jAhVYBc0KHWsmBs0QjRx6BAgBEAU&url=https%3A%2F%2Ficonscout.com%2Ficon%2Fnasa&psig=AOvVaw0inHh1KThSqmwMAVygQPz7&ust=1563507410130563">
                     </v-list-tile-avatar>
 
                     <v-list-tile-content>
-                        <v-list-tile-title>John Leider</v-list-tile-title>
+                        <v-list-tile-title>NASA SEES Flood Response</v-list-tile-title>
                     </v-list-tile-content>
 
                     <v-list-tile-action>
@@ -55,8 +55,11 @@
             return {
                 drawer: true,
                 items: [
-                    { title: 'Home', icon: 'dashboard' },
-                    { title: 'About', icon: 'question_answer' }
+                    { title: 'Home', icon: 'home' },
+                    { title: 'Layer Toggles', icon: 'layers' },
+                    { title: 'Sliders', icon: 'opacity' },
+                    { title: '3D scene', icon: '3d_rotation' },
+                    { title: 'About', icon: 'info' }
                 ],
                 mini: true,
                 right: null

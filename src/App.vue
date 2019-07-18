@@ -1,6 +1,5 @@
 <template>
     <div id="main">
-    <h1>Hello</h1>
     <Map />
         <Navigation/>
     </div>
