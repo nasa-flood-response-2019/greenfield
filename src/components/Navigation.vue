@@ -9,7 +9,7 @@
             <v-list class="pa-0">
                 <v-list-tile avatar>
                     <v-list-tile-avatar>
-                        <img src="https://www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwiSlMuRxb3jAhVYBc0KHWsmBs0QjRx6BAgBEAU&url=https%3A%2F%2Ficonscout.com%2Ficon%2Fnasa&psig=AOvVaw0inHh1KThSqmwMAVygQPz7&ust=1563507410130563">
+                        <img src="https://cdn.iconscout.com/icon/free/png-256/nasa-282190.png">
                     </v-list-tile-avatar>
 
                     <v-list-tile-content>
