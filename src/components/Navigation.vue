@@ -52,8 +52,11 @@
                 drawer: true,
                 items: [
                     { title: 'Home', icon: 'home' },
-                    { title: 'Layer Toggles', icon: 'layers' },
-                    { title: 'Sliders', icon: 'opacity' },
+                    { title: 'Basemaps', icon: 'map' },
+                    { title: 'Data Layers', icon: 'layers' },
+                    //embed sliders to data layers
+                    //have sliders pop up on screen when new data layer added
+                    // { title: 'Opacity', icon: 'opacity' },
                     { title: '3D scene', icon: '3d_rotation' },
                     { title: 'About', icon: 'info' }
                 ],
@@ -68,7 +71,7 @@
 </script>
 <style scoped>
     #drawer{
-        z-index: 500;
+        z-index: 1010;
         position: absolute;
         top: 55px;
         left: 0px;

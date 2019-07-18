@@ -14,7 +14,7 @@
 
 <style scoped>
         #toolbar{
-                z-index: 501;
+                z-index: 1020;
                 position: absolute;
                 top: 0px;
                 left: 0px;

@@ -315,10 +315,10 @@
         right: 0px;
     }
     .leaflet-left .leaflet-control {
-        margin-left: 3750% !important;
+        margin-left: 100px !important; /*3750%*/
     }
 
     .leaflet-top .leaflet-control {
-        margin-top: 40px !important;
+        margin-top: 60px !important;
     }
 </style>
