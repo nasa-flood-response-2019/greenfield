@@ -4,7 +4,7 @@
 
 <script>
     export default {
-        name: "App1"
+        name: "Map"
     }
 </script>
 
