@@ -306,11 +306,19 @@
         checkRemoveLabelsOnly();
     }
 </script>
-<style scoped>
+<style>
     #mapTexas{
         width: 100%;
         height: inherit;
         top: 30px;
         right: 0px;
+    }
+    .leaflet-left .leaflet-control {
+        margin-left: 80px !important;
+
+    }
+    .leaflet-top .leaflet-control {
+        margin-top: 20px !important;
+
     }
 </style>
