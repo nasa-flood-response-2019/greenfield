@@ -310,7 +310,7 @@
     #mapTexas{
         width: 100%;
         height: inherit;
-        top: 40px;
+        top: 30px;
         right: 0px;
     }
 </style>
