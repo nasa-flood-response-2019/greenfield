@@ -72,7 +72,10 @@
                     esriToposLayer
                 ]
             });
+<<<<<<< HEAD
             esriToposLayer = esri.basemapLayer("Topographic").addTo(movesMap);
+=======
+>>>>>>> 40579b82634af1e97649ad1b0b900e383140f900
 
             /*            geoJsonQPF_Day1 = L.geoJson(qpfDay1,
                             {
