@@ -1,19 +1,13 @@
 <template>
     <v-navigation-drawer id = "drawer"
-<<<<<<< HEAD
-                         v-model="drawer"
-                         :mini-variant.sync="mini"
-                         hide-overlay
-                         stateless
-                         v-bind:width="350"
-=======
+
+
             v-model="drawer"
             :mini-variant.sync="mini"
             hide-overlay
             stateless
             v-bind:width="350"
->>>>>>> 9c9782937144e446e87e677c8a4dfeb94c886cfd
-    >
+>
         <v-toolbar flat class="transparent">
             <v-list class="pa-0">
                 <v-list-tile avatar>
@@ -79,11 +73,9 @@
         z-index: 500;
         top: 50px;
         left: 0px;
-<<<<<<< HEAD
-    }
-=======
 
     }
 
->>>>>>> 9c9782937144e446e87e677c8a4dfeb94c886cfd
+
+
 </style>
