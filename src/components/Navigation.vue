@@ -1,10 +1,10 @@
 <template>
     <v-navigation-drawer id = "drawer"
-            v-model="drawer"
-            :mini-variant.sync="mini"
-            hide-overlay
-            stateless
-            v-bind:width="350"
+                         v-model="drawer"
+                         :mini-variant.sync="mini"
+                         hide-overlay
+                         stateless
+                         v-bind:width="350"
     >
         <v-toolbar flat class="transparent">
             <v-list class="pa-0">
@@ -12,11 +12,9 @@
                     <v-list-tile-avatar>
                         <img src="https://cdn.iconscout.com/icon/free/png-256/nasa-282190.png">
                     </v-list-tile-avatar>
-
                     <v-list-tile-content>
                         <v-list-tile-title>Web Map Menu</v-list-tile-title>
                     </v-list-tile-content>
-
                     <v-list-tile-action>
                         <v-btn
                                 icon
@@ -28,10 +26,8 @@
                 </v-list-tile>
             </v-list>
         </v-toolbar>
-
         <v-list class="pt-0" dense>
             <v-divider></v-divider>
-
             <v-list-tile
                     v-for="item in items"
                     :key="item.title"
@@ -40,7 +36,6 @@
                 <v-list-tile-action>
                     <v-icon>{{ item.icon }}</v-icon>
                 </v-list-tile-action>
-
                 <v-list-tile-content>
                     <v-list-tile-title>{{ item.title }}</v-list-tile-title>
                 </v-list-tile-content>
@@ -48,7 +43,6 @@
         </v-list>
     </v-navigation-drawer>
 </template>
-
 <script>
     //import Header from './components/Header.vue';
     export default {
@@ -72,14 +66,11 @@
         }
     }
 </script>
-
 <style scoped>
     #drawer{
         z-index: 500;
         position: absolute;
-        top: 50px;
+        top: 48px;
         left: 0px;
-
     }
-
 </style>
