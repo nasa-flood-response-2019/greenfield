@@ -52,7 +52,8 @@
                 drawer: true,
                 items: [
                     { title: 'Home', icon: 'home' },
-                    { title: 'Layer Toggles', icon: 'layers' },
+                    { title: 'BaseMaps', icon: 'map' },
+                    { title: 'Data Layers', icon: 'layers' },
                     { title: 'Sliders', icon: 'opacity' },
                     { title: '3D scene', icon: '3d_rotation' },
                     { title: 'About', icon: 'info' }
