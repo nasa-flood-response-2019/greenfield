@@ -108,14 +108,11 @@
                         <v-list-tile-action>
                             <v-checkbox v-model="video"></v-checkbox>
                         </v-list-tile-action>
-                        <<<<<<< HEAD
-                        ​
-                        =======
+
 
                         <v-list-tile-content @click="video = !video">
                             <v-list-tile-title v-text="layers[0]"></v-list-tile-title>
                         </v-list-tile-content>
-                        >>>>>>> e5bb4c88344a309bd488aa8d8090c98edc259cd0
                     </v-list-tile>
                     <!--                    end of the first chunk of code for the checkbox-->
 
