@@ -24,16 +24,10 @@
                         </v-btn>
                     </v-list-tile-action>
                 </v-list-tile>
-
-
-                <v-divider></v-divider>
-
-                <v-list-group
-
-
                 <v-divider></v-divider>
                 <v-list-group
-
+                <v-divider></v-divider>
+                <v-list-group
                         :value="false"
                 >
                     <!--                        prepend-icon="map"-->
@@ -62,7 +56,6 @@
                                 <v-list-tile-title>Basemap 1</v-list-tile-title>
                             </v-list-tile>
                         </template>
-
                         <v-list-tile
                                 v-for="(basemap1, i) in basemap1"
                                 :key="i"
@@ -74,13 +67,9 @@
                             </v-list-tile-action>
                         </v-list-tile>
                     </v-list-group>
-
-
                 </v-list-group>
-
                 <!--                    MENU ITEM 2-->
                 <v-list-group
-
                         :value="false"
                 >
                     <template v-slot:activator>
@@ -101,31 +90,18 @@
                     <v-list-group
                             no-action
                             sub-group
-
                             :value="false"
                     >
-<!--                        <template v-slot:activator>-->
+                        <template v-slot:activator>
                             <v-list-tile>
                                 <v-btn
                                         icon
                                         @click.stop="mini = !mini"
                                 >
-                                <v-list-tile-title>Data Layers</v-list-tile-title>
+                                    <v-list-tile-title>Data Layers</v-list-tile-title>
                                 </v-btn>
                             </v-list-tile>
                         </template>
-<<<<<<< HEAD
-<!--                        <v-list-tile-->
-<!--                                v-for="(data1, i) in data1"-->
-<!--                                :key="i"-->
-<!--                                @click=""-->
-<!--                        >-->
-<!--                            <v-list-tile-title v-text="data1[0]"></v-list-tile-title>-->
-<!--                            <v-list-tile-action>-->
-<!--                                <v-icon v-text="data1[1]"></v-icon>-->
-<!--                            </v-list-tile-action>-->
-<!--                        </v-list-tile>-->
-=======
                         <v-list-group
                                 no-action
                                 sub-group
@@ -136,7 +112,6 @@
                                     <v-list-tile-title>DataLayer 1</v-list-tile-title>
                                 </v-list-tile>
                             </template>
-
                             <v-list-tile
                                     v-for="(data1, i) in data1"
                                     :key="i"
@@ -148,15 +123,8 @@
                                 </v-list-tile-action>
                             </v-list-tile>
                         </v-list-group>
->>>>>>> 2186ed913222a110436234dd0d25580cb7bcbc62
                     </v-list-group>
-
-
                 </v-list-group>
-
-
-
-
             </v-list>
         </v-toolbar>
     </v-navigation-drawer>
@@ -165,13 +133,11 @@
     //import Header from './components/Header.vue';
     export default {
         name: "Navigation",
-
         props:
             {
                 width: 400
             },
         data() {
-
             return {
                 drawer: true,
                 items: [
@@ -184,14 +150,14 @@
                     {title: '3D scene', icon: '3d_rotation', drop: false, check: false},
                     {title: 'About', icon: 'info', drop: false, check: false}
                 ],
-                // basemap1: [
-                //     ['Feature 1', 'map'],
-                //     ['Feature 2', 'home']
-                // ],
-                // data1: [
-                //     ['Data 1', 'map'],
-                //     ['Data 2', 'home']
-                // ],
+                basemap1: [
+                    ['Feature 1', 'map'],
+                    ['Feature 2', 'home']
+                ],
+                data1: [
+                    ['Data 1', 'map'],
+                    ['Data 2', 'home']
+                ],
                 mini: true,
                 right: null,
                 bases: [
@@ -200,7 +166,6 @@
                 ]
             }
         }
-
     }
 </script>
 <style scoped>
