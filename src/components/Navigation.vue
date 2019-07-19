@@ -24,13 +24,14 @@
                         </v-btn>
                     </v-list-tile-action>
                 </v-list-tile>
-<<<<<<< HEAD
-
-
 
 
                 <v-divider></v-divider>
 
+                <v-list-group
+
+
+                <v-divider></v-divider>
                 <v-list-group
 
                         :value="false"
@@ -74,15 +75,43 @@
                         </v-list-tile>
                     </v-list-group>
 
+
                 </v-list-group>
-<!--                    MENU ITEM 2-->
+
+                <!--                    MENU ITEM 2-->
+                <v-list-group
+
+                        :value="false"
+                >
+                    <template v-slot:activator>
+                        <v-list-tile>
+                            <v-list-tile-avatar>
+                                <v-btn
+                                        icon
+                                        @click.stop="mini = !mini"
+                                >
+                                    <v-icon>{{items[2].icon}}</v-icon>
+                                </v-btn>
+                            </v-list-tile-avatar>
+                            <v-list-tile-content>
+                                <v-list-tile-title>Data Layers</v-list-tile-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
+                    </template>
                     <v-list-group
-                            prepend-icon="layers"
+                            no-action
+                            sub-group
+
                             :value="false"
                     >
                         <template v-slot:activator>
                             <v-list-tile>
+                                <v-btn
+                                        icon
+                                        @click.stop="mini = !mini"
+                                >
                                 <v-list-tile-title>Data Layers</v-list-tile-title>
+                                </v-btn>
                             </v-list-tile>
                         </template>
                         <v-list-group
@@ -110,73 +139,12 @@
                     </v-list-group>
 
 
-<!--            <v-list-tile-->
-<!--                    v-for="item in items"-->
-<!--                    :key="item.title"-->
-<!--                    @click=""-->
-<!--            >-->
-<!--                <v-list-tile-action>-->
-<!--                    <v-icon>{{ item.icon }}</v-icon>-->
-<!--                </v-list-tile-action>-->
-<!--                <v-list-tile-content>-->
-<!--                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>-->
-<!--                </v-list-tile-content>-->
-<!--            </v-list-tile>-->
+                </v-list-group>
 
-<!--            <v-list-tile-->
-<!--                    v-for="item in items"-->
-<!--                    :key="item.title"-->
-<!--                    @click=""-->
-<!--            >-->
-<!--                <v-list-tile-action>-->
-<!--                    <v-icon>{{ item.icon }}</v-icon>-->
-<!--                </v-list-tile-action>-->
-<!--                <v-list-tile-title>-->
-<!--                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>-->
-<!--                    <v-list-group-->
-<!--                            no-action-->
-<!--                            sub-group-->
-<!--                            value="true"-->
-<!--                            v-if="drop">-->
 
-<!--                        <v-list-tile-content>-->
-<!--                                <v-list-tile>-->
-<!--                                    <v-list-tile-title>Basemaps</v-list-tile-title>-->
-<!--                                </v-list-tile>-->
-<!--                    <v-list-tile-->
-<!--                            v-for="(base, i) in bases"-->
-<!--                            :key="i"-->
-<!--                            @click=""-->
-<!--                    >-->
-<!--                        <v-list-tile-title v-text="base[0]"></v-list-tile-title>-->
-<!--                        <v-list-tile-action>-->
-<!--                            <v-icon v-text="base[1]"></v-icon>-->
-<!--                        </v-list-tile-action>-->
-<!--                    </v-list-tile>-->
-<!--                        </v-list-tile-content>-->
-<!--                    </v-list-group>-->
-<!--                </v-list-tile-title>-->
-<!--            </v-list-tile>-->
 
-=======
+
             </v-list>
-        </v-toolbar>
-        <v-list class="pt-0" dense>
-            <v-divider></v-divider>
-            <v-list-tile
-                    v-for="item in items"
-                    :key="item.title"
-                    @click=""
-            >
-                <v-list-tile-action>
-                    <v-icon>{{ item.icon }}</v-icon>
-                </v-list-tile-action>
-                <v-list-tile-content>
-                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
->>>>>>> f7c905dc5ec66ef1ad7d6d82214c5d8f550b8cf2
-        </v-list>
         </v-toolbar>
     </v-navigation-drawer>
 </template>
@@ -184,13 +152,14 @@
     //import Header from './components/Header.vue';
     export default {
         name: "Navigation",
-<<<<<<< HEAD
+
         props:
             {
                 width: 400
             },
-        data(){
-                return {
+        data() {
+
+            return {
                 drawer: true,
                 items: [
                     {title: 'Home', icon: 'home', drop: false, check: false},
@@ -213,30 +182,12 @@
                 mini: true,
                 right: null,
                 bases: [
-                         ['Default', 'map'],
-                         ['Streets', 'map']
-                 ]
-                }
-=======
-        data () {
-            return {
-                drawer: true,
-                items: [
-                    { title: 'Home', icon: 'home' },
-                    { title: 'BaseMaps', icon: 'map' },
-                    { title: 'Data Layers', icon: 'layers' },
-                    { title: 'Sliders', icon: 'opacity' },
-                    { title: '3D scene', icon: '3d_rotation' },
-                    { title: 'About', icon: 'info' }
-                ],
-                mini: true,
-                right: null
->>>>>>> f7c905dc5ec66ef1ad7d6d82214c5d8f550b8cf2
+                    ['Default', 'map'],
+                    ['Streets', 'map']
+                ]
             }
-        },
-        props: {
-            width: 400
         }
+
     }
 </script>
 <style scoped>
