@@ -24,8 +24,16 @@
                         </v-btn>
                     </v-list-tile-action>
                 </v-list-tile>
+
+
+                <v-divider></v-divider>
+
+                <v-list-group
+
+
                 <v-divider></v-divider>
                 <v-list-group
+
                         :value="false"
                 >
                     <!--                        prepend-icon="map"-->
@@ -54,6 +62,7 @@
                                 <v-list-tile-title>Basemap 1</v-list-tile-title>
                             </v-list-tile>
                         </template>
+
                         <v-list-tile
                                 v-for="(basemap1, i) in basemap1"
                                 :key="i"
@@ -65,27 +74,47 @@
                             </v-list-tile-action>
                         </v-list-tile>
                     </v-list-group>
+
+
                 </v-list-group>
+
                 <!--                    MENU ITEM 2-->
                 <v-list-group
-                        prepend-icon="layers"
+
                         :value="false"
                 >
                     <template v-slot:activator>
                         <v-list-tile>
-                            <v-list-tile-title>Data Layers</v-list-tile-title>
+                            <v-list-tile-avatar>
+                                <v-btn
+                                        icon
+                                        @click.stop="mini = !mini"
+                                >
+                                    <v-icon>{{items[2].icon}}</v-icon>
+                                </v-btn>
+                            </v-list-tile-avatar>
+                            <v-list-tile-content>
+                                <v-list-tile-title>Data Layers</v-list-tile-title>
+                            </v-list-tile-content>
                         </v-list-tile>
                     </template>
                     <v-list-group
                             no-action
                             sub-group
+
                             :value="false"
                     >
 <!--                        <template v-slot:activator>-->
                             <v-list-tile>
-                                <v-list-tile-title>DataLayer 1</v-list-tile-title>
+                                <v-btn
+                                        icon
+                                        @click.stop="mini = !mini"
+                                >
+                                <v-list-tile-title>Data Layers</v-list-tile-title>
+                                </v-btn>
                             </v-list-tile>
                         </template>
+<<<<<<< HEAD
 <!--                        <v-list-tile-->
 <!--                                v-for="(data1, i) in data1"-->
 <!--                                :key="i"-->
@@ -96,53 +125,38 @@
 <!--                                <v-icon v-text="data1[1]"></v-icon>-->
 <!--                            </v-list-tile-action>-->
 <!--                        </v-list-tile>-->
+=======
+                        <v-list-group
+                                no-action
+                                sub-group
+                                :value="false"
+                        >
+                            <template v-slot:activator>
+                                <v-list-tile>
+                                    <v-list-tile-title>DataLayer 1</v-list-tile-title>
+                                </v-list-tile>
+                            </template>
+
+                            <v-list-tile
+                                    v-for="(data1, i) in data1"
+                                    :key="i"
+                                    @click=""
+                            >
+                                <v-list-tile-title v-text="data1[0]"></v-list-tile-title>
+                                <v-list-tile-action>
+                                    <v-icon v-text="data1[1]"></v-icon>
+                                </v-list-tile-action>
+                            </v-list-tile>
+                        </v-list-group>
+>>>>>>> 2186ed913222a110436234dd0d25580cb7bcbc62
                     </v-list-group>
+
+
                 </v-list-group>
-                <!--            <v-list-tile-->
-                <!--                    v-for="item in items"-->
-                <!--                    :key="item.title"-->
-                <!--                    @click=""-->
-                <!--            >-->
-                <!--                <v-list-tile-action>-->
-                <!--                    <v-icon>{{ item.icon }}</v-icon>-->
-                <!--                </v-list-tile-action>-->
-                <!--                <v-list-tile-content>-->
-                <!--                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>-->
-                <!--                </v-list-tile-content>-->
-                <!--            </v-list-tile>-->
-                <!--            <v-list-tile-->
-                <!--                    v-for="item in items"-->
-                <!--                    :key="item.title"-->
-                <!--                    @click=""-->
-                <!--            >-->
-                <!--                <v-list-tile-action>-->
-                <!--                    <v-icon>{{ item.icon }}</v-icon>-->
-                <!--                </v-list-tile-action>-->
-                <!--                <v-list-tile-title>-->
-                <!--                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>-->
-                <!--                    <v-list-group-->
-                <!--                            no-action-->
-                <!--                            sub-group-->
-                <!--                            value="true"-->
-                <!--                            v-if="drop">-->
-                <!--                        <v-list-tile-content>-->
-                <!--                                <v-list-tile>-->
-                <!--                                    <v-list-tile-title>Basemaps</v-list-tile-title>-->
-                <!--                                </v-list-tile>-->
-                <!--                    <v-list-tile-->
-                <!--                            v-for="(base, i) in bases"-->
-                <!--                            :key="i"-->
-                <!--                            @click=""-->
-                <!--                    >-->
-                <!--                        <v-list-tile-title v-text="base[0]"></v-list-tile-title>-->
-                <!--                        <v-list-tile-action>-->
-                <!--                            <v-icon v-text="base[1]"></v-icon>-->
-                <!--                        </v-list-tile-action>-->
-                <!--                    </v-list-tile>-->
-                <!--                        </v-list-tile-content>-->
-                <!--                    </v-list-group>-->
-                <!--                </v-list-tile-title>-->
-                <!--            </v-list-tile>-->
+
+
+
+
             </v-list>
         </v-toolbar>
     </v-navigation-drawer>
@@ -151,11 +165,13 @@
     //import Header from './components/Header.vue';
     export default {
         name: "Navigation",
+
         props:
             {
                 width: 400
             },
-        data(){
+        data() {
+
             return {
                 drawer: true,
                 items: [
@@ -184,6 +200,7 @@
                 ]
             }
         }
+
     }
 </script>
 <style scoped>
