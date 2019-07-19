@@ -24,6 +24,7 @@
                         </v-btn>
                     </v-list-tile-action>
                 </v-list-tile>
+<<<<<<< HEAD
 
 
 
@@ -157,6 +158,24 @@
 <!--                </v-list-tile-title>-->
 <!--            </v-list-tile>-->
 
+=======
+            </v-list>
+        </v-toolbar>
+        <v-list class="pt-0" dense>
+            <v-divider></v-divider>
+            <v-list-tile
+                    v-for="item in items"
+                    :key="item.title"
+                    @click=""
+            >
+                <v-list-tile-action>
+                    <v-icon>{{ item.icon }}</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                </v-list-tile-content>
+            </v-list-tile>
+>>>>>>> f7c905dc5ec66ef1ad7d6d82214c5d8f550b8cf2
         </v-list>
         </v-toolbar>
     </v-navigation-drawer>
@@ -165,6 +184,7 @@
     //import Header from './components/Header.vue';
     export default {
         name: "Navigation",
+<<<<<<< HEAD
         props:
             {
                 width: 400
@@ -197,8 +217,27 @@
                          ['Streets', 'map']
                  ]
                 }
+=======
+        data () {
+            return {
+                drawer: true,
+                items: [
+                    { title: 'Home', icon: 'home' },
+                    { title: 'BaseMaps', icon: 'map' },
+                    { title: 'Data Layers', icon: 'layers' },
+                    { title: 'Sliders', icon: 'opacity' },
+                    { title: '3D scene', icon: '3d_rotation' },
+                    { title: 'About', icon: 'info' }
+                ],
+                mini: true,
+                right: null
+>>>>>>> f7c905dc5ec66ef1ad7d6d82214c5d8f550b8cf2
             }
+        },
+        props: {
+            width: 400
         }
+    }
 </script>
 <style scoped>
     #drawer{
