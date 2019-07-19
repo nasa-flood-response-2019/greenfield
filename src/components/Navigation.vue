@@ -159,7 +159,7 @@
             return {
                 drawer: true,
                 items: [
-                    {title: 'Home', icon: 'home'},
+                    {title: 'Reset Map', icon: 'home'},
                     {title: 'Basemaps', icon: 'map'},
                     {title: 'Data Layers', icon: 'layers'},
                     //embed sliders to data layers

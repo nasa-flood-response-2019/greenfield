@@ -14,9 +14,11 @@
     let esriToposLayer;
     let esriStreetsLayer;
     let googleImageryLayer;
-    let geoJsonQPF_Day1;
-    let geoJsonQPF_Day2;
+    //let geoJsonQPF_Day1;
+    //let geoJsonQPF_Day2;
     let maskingSentinelApr16;
+    let esriSnowLayer;
+
     export default {
         name: "Map",
         // components: {
@@ -47,7 +49,8 @@
             esriAerialsLayer = esri.basemapLayer('Imagery',{attribution: "ESRI et al",hideLogo:"true"});
             esriAerialsLabels = esri.basemapLayer('ImageryLabels');
             esriStreetsLayer = esri.basemapLayer('Streets',{attribution: "ESRI et al",hideLogo:"true"});
-            googleImageryLayer = wmts.tileLayerWMTS('https://txgi.tnris.org/login/path/arena-baker-mouse-bonus/wmts?' ,
+            googleImageryLayer = wmts.tileLayerWMTS('https://txgi.tnris.org/login/path/arena-baker-mouse-bonus/wmts?',
+
                 {
                     layer: 'texas',
                     style: "normal",
@@ -64,6 +67,11 @@
                     esriToposLayer
                 ]
             });
+
+            esriSnowLayer = esri.featureLayer({
+                url: 'https://cumulus.tnc.org/arcgis/rest/services/Atlas/FreshwaterMaps/MapServer/1'
+            }).addTo(movesMap);
+
             /*            geoJsonQPF_Day1 = L.geoJson(qpfDay1,
                             {
                                 style: function(feature) {
@@ -155,6 +163,7 @@
             this.$eventHub.$on('redrawMap',this.redrawMap);
             //toggleMaskTornado20190416
             this.$eventHub.$on('toggleMaskTornado20190416', this.addRemoveMaskTornado);
+            //esriSnowLayer.addTo(movesMap);
         }
     }
     function resetMap(){
@@ -305,6 +314,7 @@
         }
         checkRemoveLabelsOnly();
     }
+
 </script>
 <style>
     #mapTexas{
