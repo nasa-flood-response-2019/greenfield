@@ -175,10 +175,10 @@
                     ['Default', 'map'],
                     ['Streets', 'map']
                 ],
-                data1: [
-                    ['Data 1', 'layers'],
-                    //['Data 2', 'layers']
-                ],
+                // data1: [
+                //     ['Data 1', 'layers'],
+                //     //['Data 2', 'layers']
+                // ],
                 mini: true,
                 right: null,
                 toggle: false //for check
