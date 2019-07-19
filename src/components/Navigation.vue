@@ -99,26 +99,22 @@
                             </v-list-tile-content>
                         </v-list-tile>
                     </template>
-                    <v-list-tile @click="">
+<!--                    The code for each all check boxes starts here-->
+                    <v-list-tile
+                            v-for="(layers, i) in layers"
+                            :key="i"
+                            @click=""
+                    >
                         <v-list-tile-action>
                             <v-checkbox v-model="video"></v-checkbox>
                         </v-list-tile-action>
 
                         <v-list-tile-content @click="video = !video">
-                            <v-list-tile-title>Video sounds</v-list-tile-title>
+                            <v-list-tile-title v-text="layers[0]"></v-list-tile-title>
                         </v-list-tile-content>
                     </v-list-tile>
-                    <!--                    <v-list-tile-->
-<!--                            v-for="(data1, i) in data1"-->
-<!--                            :key="i"-->
-<!--                            @click=""-->
-<!--                    >-->
-<!--                        <v-list-tile-title v-text="data1[0]"></v-list-tile-title>-->
-<!--                        <v-list-tile-action>-->
-<!--                            <v-icon v-text="data1[1]"></v-icon>-->
-<!--                        </v-list-tile-action>-->
+<!--                    end of the first chunk of code for the checkbox-->
 
-<!--                    </v-list-tile>-->
                 </v-list-group>
                 <v-list-tile>
                     <v-list-tile-avatar>
@@ -163,27 +159,37 @@
                 drawer: true,
                 items: [
                     {title: 'Home', icon: 'home'},
-                    {title: 'BaseMaps', icon: 'map'},
+                    {title: 'Basemaps', icon: 'map'},
                     {title: 'Data Layers', icon: 'layers'},
                     //embed sliders to data layers
                     //have sliders pop up on screen when new data layer added
                     // { title: 'Opacity', icon: 'opacity' },
-                    {title: '3D scene', icon: '3d_rotation'},
+                    {title: '3D Scene', icon: '3d_rotation'},
                     {title: 'About', icon: 'info'}
                 ],
                 basemap1: [
                     ['Default', 'map'],
                     ['Streets', 'map']
                 ],
-                // data1: [
-                //     ['Data 1', 'layers'],
-                //     //['Data 2', 'layers']
-                // ],
+                layers: [
+                    ['Data 1', 'layers'],
+                    ['Data 2', 'layers']
+                ],
                 mini: true,
                 right: null,
-                toggle: false //for check
+
             }
+        },
+        methods:{
+            emitLayer1:emitLayer1,
+            emitLayer2:emitLayer2
         }
+    }
+    function emitLayer1(){
+        this.$eventHub.$emit('Layer1');
+    }
+    function emitLayer2(){
+        this.$eventHub.$emit('Layer2');
     }
 </script>
 <style scoped>
