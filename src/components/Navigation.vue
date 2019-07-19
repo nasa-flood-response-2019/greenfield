@@ -25,14 +25,28 @@
                     </v-list-tile-action>
                 </v-list-tile>
                 <v-divider></v-divider>
-                <v-list-group
+<!--                <v-list-group-->
                 <v-divider></v-divider>
 
 
+                <v-list-tile>
+                    <v-list-tile-avatar>
+                        <v-btn
+                                icon
+                                @click.stop="mini = !mini"
+                        >
+                            <v-icon>{{items[0].icon}}</v-icon>
+                        </v-btn>
+                    </v-list-tile-avatar>
+                    <v-list-tile-content>
+                        <v-list-tile-title>{{items[0].title}}</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
                 <v-list-group
                         :value="false"
                 >
                     <!--                        prepend-icon="map"-->
+
                     <template v-slot:activator>
                         <v-list-tile>
                             <v-list-tile-avatar>
@@ -44,20 +58,20 @@
                                 </v-btn>
                             </v-list-tile-avatar>
                             <v-list-tile-content>
-                                <v-list-tile-title>Basemaps</v-list-tile-title>
+                                <v-list-tile-title>{{items[1].title}}</v-list-tile-title>
                             </v-list-tile-content>
                         </v-list-tile>
                     </template>
-                    <v-list-group
-                            no-action
-                            sub-group
-                            :value="false"
-                    >
-                        <template v-slot:activator>
-                            <v-list-tile>
-                                <v-list-tile-title>Basemap 1</v-list-tile-title>
-                            </v-list-tile>
-                        </template>
+<!--                    <v-list-group-->
+<!--                            no-action-->
+<!--                            sub-group-->
+<!--                            :value="false"-->
+<!--                    >-->
+<!--                        <template v-slot:activator>-->
+<!--                            <v-list-tile>-->
+<!--                                <v-list-tile-title>Basemap 1</v-list-tile-title>-->
+<!--                            </v-list-tile>-->
+<!--                        </template>-->
                         <v-list-tile
                                 v-for="(basemap1, i) in basemap1"
                                 :key="i"
@@ -69,6 +83,7 @@
                             </v-list-tile-action>
                         </v-list-tile>
                     </v-list-group>
+
 
                 </v-list-group>
 
@@ -109,7 +124,62 @@
                             </v-list-tile>
 
 
+<!--                </v-list-group>-->
+                <v-list-group
+                        :value="false">
+                    <template v-slot:activator>
+                        <v-list-tile>
+                            <v-list-tile-avatar>
+                                <v-btn
+                                        icon
+                                        @click.stop="mini = !mini"
+                                >
+                                    <v-icon>{{items[2].icon}}</v-icon>
+                                </v-btn>
+                            </v-list-tile-avatar>
+                            <v-list-tile-content>
+                                <v-list-tile-title>Data Layers</v-list-tile-title>
+                            </v-list-tile-content>
+                        </v-list-tile>
+                    </template>
+                    <v-list-tile
+                            v-for="(data1, i) in data1"
+                            :key="i"
+                            @click=""
+                    >
+                        <v-list-tile-title v-text="data1[0]"></v-list-tile-title>
+                        <v-list-tile-action>
+                            <v-icon v-text="data1[1]"></v-icon>
+                        </v-list-tile-action>
+
+                    </v-list-tile>
                 </v-list-group>
+                <v-list-tile>
+                    <v-list-tile-avatar>
+                        <v-btn
+                                icon
+                                @click.stop="mini = !mini"
+                        >
+                            <v-icon>{{items[3].icon}}</v-icon>
+                        </v-btn>
+                    </v-list-tile-avatar>
+                    <v-list-tile-content>
+                        <v-list-tile-title>{{items[3].title}}</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+                <v-list-tile>
+                    <v-list-tile-avatar>
+                        <v-btn
+                                icon
+                                @click.stop="mini = !mini"
+                        >
+                            <v-icon>{{items[4].icon}}</v-icon>
+                        </v-btn>
+                    </v-list-tile-avatar>
+                    <v-list-tile-content>
+                        <v-list-tile-title>{{items[4].title}}</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
             </v-list>
         </v-toolbar>
     </v-navigation-drawer>
@@ -127,7 +197,7 @@
                 drawer: true,
                 items: [
                     {title: 'Home', icon: 'home', drop: false, check: false},
-                    {title: 'Basemaps', icon: 'map', drop: true, check: true},
+                    {title: 'BaseMaps', icon: 'map', drop: true, check: true},
                     {title: 'Data Layers', icon: 'layers', drop: false, check: false},
                     //embed sliders to data layers
                     //have sliders pop up on screen when new data layer added
@@ -136,19 +206,16 @@
                     {title: 'About', icon: 'info', drop: false, check: false}
                 ],
                 basemap1: [
-                    ['Feature 1', 'map'],
-                    ['Feature 2', 'home']
+                    ['Default', 'map'],
+                    ['Streets', 'map']
                 ],
                 data1: [
-                    ['Data 1', 'map'],
-                    ['Data 2', 'home']
+                    ['Data 1', 'layers'],
+                    //['Data 2', 'layers']
                 ],
                 mini: true,
                 right: null,
-                bases: [
-                    ['Default', 'map'],
-                    ['Streets', 'map']
-                ]
+                toggle: false //for check
             }
         }
     }
