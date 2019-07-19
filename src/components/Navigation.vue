@@ -81,21 +81,21 @@
                             sub-group
                             :value="false"
                     >
-                        <template v-slot:activator>
+<!--                        <template v-slot:activator>-->
                             <v-list-tile>
                                 <v-list-tile-title>DataLayer 1</v-list-tile-title>
                             </v-list-tile>
                         </template>
-                        <v-list-tile
-                                v-for="(data1, i) in data1"
-                                :key="i"
-                                @click=""
-                        >
-                            <v-list-tile-title v-text="data1[0]"></v-list-tile-title>
-                            <v-list-tile-action>
-                                <v-icon v-text="data1[1]"></v-icon>
-                            </v-list-tile-action>
-                        </v-list-tile>
+<!--                        <v-list-tile-->
+<!--                                v-for="(data1, i) in data1"-->
+<!--                                :key="i"-->
+<!--                                @click=""-->
+<!--                        >-->
+<!--                            <v-list-tile-title v-text="data1[0]"></v-list-tile-title>-->
+<!--                            <v-list-tile-action>-->
+<!--                                <v-icon v-text="data1[1]"></v-icon>-->
+<!--                            </v-list-tile-action>-->
+<!--                        </v-list-tile>-->
                     </v-list-group>
                 </v-list-group>
                 <!--            <v-list-tile-->
@@ -168,14 +168,14 @@
                     {title: '3D scene', icon: '3d_rotation', drop: false, check: false},
                     {title: 'About', icon: 'info', drop: false, check: false}
                 ],
-                basemap1: [
-                    ['Feature 1', 'map'],
-                    ['Feature 2', 'home']
-                ],
-                data1: [
-                    ['Data 1', 'map'],
-                    ['Data 2', 'home']
-                ],
+                // basemap1: [
+                //     ['Feature 1', 'map'],
+                //     ['Feature 2', 'home']
+                // ],
+                // data1: [
+                //     ['Data 1', 'map'],
+                //     ['Data 2', 'home']
+                // ],
                 mini: true,
                 right: null,
                 bases: [

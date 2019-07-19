@@ -5,7 +5,6 @@
             <Navigation/>
             <Header/>
             <Map/>
-<!--                <Test/>-->
         </v-container>
         </v-content>
     </v-app>
