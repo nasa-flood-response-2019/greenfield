@@ -27,6 +27,8 @@
                 <v-divider></v-divider>
                 <v-list-group
                 <v-divider></v-divider>
+
+
                 <v-list-group
                         :value="false"
                 >
@@ -67,51 +69,34 @@
                             </v-list-tile-action>
                         </v-list-tile>
                     </v-list-group>
+
                 </v-list-group>
-                <!--                    MENU ITEM 2-->
+
+
+
                 <v-list-group
-                        :value="false"
-                >
-                    <template v-slot:activator>
-                        <v-list-tile>
-                            <v-list-tile-avatar>
-                                <v-btn
-                                        icon
-                                        @click.stop="mini = !mini"
-                                >
-                                    <v-icon>{{items[2].icon}}</v-icon>
-                                </v-btn>
-                            </v-list-tile-avatar>
-                            <v-list-tile-content>
-                                <v-list-tile-title>Data Layers</v-list-tile-title>
-                            </v-list-tile-content>
-                        </v-list-tile>
-                    </template>
-                    <v-list-group
-                            no-action
-                            sub-group
-                            :value="false"
-                    >
+                        :value="false">
+
                         <template v-slot:activator>
                             <v-list-tile>
-                                <v-btn
-                                        icon
-                                        @click.stop="mini = !mini"
-                                >
+                                <v-list-tile-avatar>
+                                    <v-btn
+                                            icon
+                                            @click.stop="mini = !mini"
+                                    >
+                                        <v-icon>{{items[2].icon}}</v-icon>
+
+                                    </v-btn>
+                                </v-list-tile-avatar>
+                                <v-list-tile-content>
                                     <v-list-tile-title>Data Layers</v-list-tile-title>
-                                </v-btn>
+                                </v-list-tile-content>
                             </v-list-tile>
                         </template>
-                        <v-list-group
-                                no-action
-                                sub-group
-                                :value="false"
-                        >
-                            <template v-slot:activator>
-                                <v-list-tile>
-                                    <v-list-tile-title>DataLayer 1</v-list-tile-title>
-                                </v-list-tile>
-                            </template>
+
+
+
+
                             <v-list-tile
                                     v-for="(data1, i) in data1"
                                     :key="i"
@@ -122,8 +107,8 @@
                                     <v-icon v-text="data1[1]"></v-icon>
                                 </v-list-tile-action>
                             </v-list-tile>
-                        </v-list-group>
-                    </v-list-group>
+
+
                 </v-list-group>
             </v-list>
         </v-toolbar>
