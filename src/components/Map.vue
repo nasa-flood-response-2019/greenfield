@@ -18,6 +18,7 @@
     //let geoJsonQPF_Day2;
     let maskingSentinelApr16;
     let esriSnowLayer;
+    let popDenseLayer;
 
     export default {
         name: "Map",
@@ -68,6 +69,18 @@
                 ]
             });
 
+            // popDenseLayer = esri.featureLayer({
+            //     url:'http://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/Congressional_District_Demographics/FeatureServer/0'
+            //     simplifyFactor: .5,
+            //         precision: 10,
+            //         //may need to use a different property in order to fill polygons correctly
+            //         style: function (feature) {
+            //             if (feature.properties.POPDENS_CY === 'earlier by over 3 weeks')
+            //                 return {color: "#003F8C"};//, fill_opacity: .99};//, weight: 2, opacity: 255
+            //         }
+            // }).addTo(movesMap);
+
+            //unable to fill polygons
             esriSnowLayer = esri.featureLayer({
                 url: 'http://cumulus.tnc.org/arcgis/rest/services/Atlas/FreshwaterMaps/MapServer/1',
                 simplifyFactor: .5,
@@ -75,7 +88,7 @@
                 //may need to use a different property in order to fill polygons correctly
                 style: function (feature) {
                     if(feature.properties.Snow_map === 'earlier by over 3 weeks')
-                        return {color: "#003F8C"};//, weight: 2, opacity: 255
+                        return {color: "#003F8C"};//, fill_opacity: .99};//, weight: 2, opacity: 255
                      else {
                          if(feature.properties.Snow_map === 'earlier by 2 to 3 weeks')
                             return { color: '#4585C4'};
@@ -105,6 +118,7 @@
                     }
                 }
             }).addTo(movesMap);
+            document.getElementById("esriSnowLayer").visibilty = "hidden";
 
             /*            geoJsonQPF_Day1 = L.geoJson(qpfDay1,
                             {
@@ -202,10 +216,10 @@
         }
     }
     function layerOn(layer) {
-
+        document.getElementById(layer).visibility = "visible";
     }
     function layerOff(layer) {
-
+        document.getElementById(layer).visibility = "hidden";
     }
     function resetMap(){
         movesMap.setView([32.3117, -99.77774], 6);

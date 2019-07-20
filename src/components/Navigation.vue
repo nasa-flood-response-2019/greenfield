@@ -178,7 +178,7 @@
                     //['Google Imagery', 'map', 'google']
                 ],
                 layers: [
-                    ['Data 1', 'layers', false],
+                    ['Data 1', 'layers', false, 'esriSnowLayer'],
                     ['Data 2', 'layers', false]
                 ],
                 mini: true,
@@ -195,9 +195,9 @@
             },
             test: function(layer) {
                 if(!layer[2])
-                    this.$eventHub.$emit('layerOn', layer[0]);
+                    console.log('on');//this.$eventHub.$emit('layerOn', layer[3]);
                 else
-                    this.$eventHub.$emit('layerOff', layer[0]);
+                    console.log('off');//this.$eventHub.$emit('layerOff', layer[3]);
             },
         }
     }
