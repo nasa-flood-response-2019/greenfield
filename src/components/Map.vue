@@ -69,14 +69,42 @@
             });
 
             esriSnowLayer = esri.featureLayer({
-                url: 'http://cumulus.tnc.org/arcgis/rest/services/Atlas/FreshwaterMaps/MapServer/1'//,
-                // style: function (feature) {
-                //     if(feature.properties.label === 'Earlier by 2 to 3 weeks')
-                //         return{color: 'red'};
-                // }
-            }).addTo(movesMap);//.on('load', e => {
-            //     features.eachFeature(console.log);
-            // });
+                url: 'http://cumulus.tnc.org/arcgis/rest/services/Atlas/FreshwaterMaps/MapServer/1',
+                simplifyFactor: .5,
+                precision: 10,
+                //may need to use a different property in order to fill polygons correctly
+                style: function (feature) {
+                    if(feature.properties.Snow_map === 'earlier by over 3 weeks')
+                        return {color: "#003F8C"};//, weight: 2, opacity: 255
+                     else {
+                         if(feature.properties.Snow_map === 'earlier by 2 to 3 weeks')
+                            return { color: '#4585C4'};
+                        else {
+                            if(feature.properties.Snow_map === 'earlier by 1 to 2 weeks')
+                                return {color: '#7DB5FA'};
+                            else
+                            {
+                                if(feature.properties.Snow_map === 'less than a week')
+                                    return {color: '#BED2FF'};
+                                else
+                                {
+                                    if(feature.properties.Snow_map === 'later by over a week')
+                                        return {color: '#BED2FF'};
+                                    else
+                                    {
+                                        if(feature.properties.Snow_map === 'other')
+                                            return {color: '#AAAAAA'};
+                                            else {
+                                                    return {color: '#E1E1E1'};
+                                                }
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }).addTo(movesMap);
 
             /*            geoJsonQPF_Day1 = L.geoJson(qpfDay1,
                             {
