@@ -27,7 +27,7 @@
                 <v-divider></v-divider>
                 <!--                <v-list-group-->
                 <v-divider></v-divider>
-                <v-list-tile>
+                <v-list-tile v-on:click="emitReset()">
                     <v-list-tile-avatar>
                         <v-btn
                                 icon
@@ -73,8 +73,10 @@
                     <v-list-tile
                             v-for="(basemap1, i) in basemap1"
                             :key="i"
-                            @click=""
+                            @click= ""
+                            v-on:click="emitLayer(basemap1[2])"
                     >
+<!--                        trying to toggle between basemaps-->
                         <v-list-tile-title v-text="basemap1[0]"></v-list-tile-title>
                         <v-list-tile-action>
                             <v-icon v-text="basemap1[1]"></v-icon>
@@ -103,14 +105,15 @@
                     <v-list-tile
                             v-for="(layers, i) in layers"
                             :key="i"
-                            @click=""
+                            @click="test(layers)"
+                            v-on:click= "layers[2] = !layers[2]"
                     >
                         <v-list-tile-action>
-                            <v-checkbox v-model="video"></v-checkbox>
+                            <v-checkbox></v-checkbox>
                         </v-list-tile-action>
 
 
-                        <v-list-tile-content @click="video = !video">
+                        <v-list-tile-content>
                             <v-list-tile-title v-text="layers[0]"></v-list-tile-title>
                         </v-list-tile-content>
                     </v-list-tile>
@@ -169,12 +172,14 @@
                     {title: 'About', icon: 'info'}
                 ],
                 basemap1: [
-                    ['Default', 'map'],
-                    ['Streets', 'map']
+                    ['Default', 'map', 'topo'],
+                    ['Street', 'map', 'streets'],
+                    ['Aerial', 'map', 'aerials']//,
+                    //['Google Imagery', 'map', 'google']
                 ],
                 layers: [
-                    ['Data 1', 'layers'],
-                    ['Data 2', 'layers']
+                    ['Data 1', 'layers', false],
+                    ['Data 2', 'layers', false]
                 ],
                 mini: true,
                 right: null,
@@ -182,16 +187,21 @@
             }
         },
         methods:{
-            emitLayer1:emitLayer1,
-            emitLayer2:emitLayer2
+            emitLayer: function(layer){
+                this.$eventHub.$emit('toggleMapLayers', layer);
+            },
+            emitReset: function() {
+                this.$eventHub.$emit('resetMap');
+            },
+            test: function(layer) {
+                if(!layer[2])
+                    this.$eventHub.$emit('layerOn', layer[0]);
+                else
+                    this.$eventHub.$emit('layerOff', layer[0]);
+            },
         }
     }
-    function emitLayer1(){
-        this.$eventHub.$emit('Layer1');
-    }
-    function emitLayer2(){
-        this.$eventHub.$emit('Layer2');
-    }
+
 </script>
 <style scoped>
     #drawer{

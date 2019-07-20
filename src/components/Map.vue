@@ -36,7 +36,7 @@
         methods:{
             //initializeMap: initializeMap()
             toggleLayer: toggleLayer,
-            addRemoveMaskTornado:addRemoveMaskTornado,
+            //addRemoveMaskTornado:addRemoveMaskTornado,
             resetMap,
             redrawMap,
             goToBookmark,
@@ -69,8 +69,14 @@
             });
 
             esriSnowLayer = esri.featureLayer({
-                url: 'https://cumulus.tnc.org/arcgis/rest/services/Atlas/FreshwaterMaps/MapServer/1'
-            }).addTo(movesMap);
+                url: 'http://cumulus.tnc.org/arcgis/rest/services/Atlas/FreshwaterMaps/MapServer/1'//,
+                // style: function (feature) {
+                //     if(feature.properties.label === 'Earlier by 2 to 3 weeks')
+                //         return{color: 'red'};
+                // }
+            }).addTo(movesMap);//.on('load', e => {
+            //     features.eachFeature(console.log);
+            // });
 
             /*            geoJsonQPF_Day1 = L.geoJson(qpfDay1,
                             {
@@ -128,29 +134,29 @@
                                     }
                                 }
                             });*/
-            let lineTornado = turf.lineString([[-95.402527,31.264172],[-95.39566,31.299382],[-95.354462,31.32754],[-95.333862,31.354517],[-95.310516,31.386175],
-                [-95.292664,31.407275],[-95.266571,31.429542],[-95.248718,31.455318],[-95.225372,31.488114],[-95.204773,31.517386],[-95.19516,31.527922],
-                [-95.185547,31.540797],[-95.175934,31.554841],[-95.169067,31.573563],[-95.159454,31.586432],[-95.145721,31.60046],[-95.126495,31.613335],
-                [-95.111389,31.633214],[-95.09491,31.649582],[-95.081177,31.662441],[-95.059204,31.678804],[-95.044098,31.688153],[-95.026245,31.703343],
-                [-95.011139,31.71853],[-94.991913,31.727875],[-94.976807,31.745394],[-94.964447,31.760575]],{name:'Alto Callout Track'});
-            let polyFootprint = turf.polygon([[[-95.767822, 32.109333],[-93.169556, 32.503971],[-92.872925, 31.023517],[-95.443726, 30.63673],[-95.767822, 32.109333]]],{name:'Sentinel 1 Footprint'});
+            // let lineTornado = turf.lineString([[-95.402527,31.264172],[-95.39566,31.299382],[-95.354462,31.32754],[-95.333862,31.354517],[-95.310516,31.386175],
+            //     [-95.292664,31.407275],[-95.266571,31.429542],[-95.248718,31.455318],[-95.225372,31.488114],[-95.204773,31.517386],[-95.19516,31.527922],
+            //     [-95.185547,31.540797],[-95.175934,31.554841],[-95.169067,31.573563],[-95.159454,31.586432],[-95.145721,31.60046],[-95.126495,31.613335],
+            //     [-95.111389,31.633214],[-95.09491,31.649582],[-95.081177,31.662441],[-95.059204,31.678804],[-95.044098,31.688153],[-95.026245,31.703343],
+            //     [-95.011139,31.71853],[-94.991913,31.727875],[-94.976807,31.745394],[-94.964447,31.760575]],{name:'Alto Callout Track'});
+            //let polyFootprint = turf.polygon([[[-95.767822, 32.109333],[-93.169556, 32.503971],[-92.872925, 31.023517],[-95.443726, 30.63673],[-95.767822, 32.109333]]],{name:'Sentinel 1 Footprint'});
             //[-95.8122343032567,30.6096779992903],[-92.8304563806788,32.5241675328058]
-            let bbox = turf.bbox(polyFootprint);
-            let bufferedTornadoTrack = turf.buffer(lineTornado,3,{units:'miles'});
-            console.log(bufferedTornadoTrack);
-            let maskedTrack = turf.mask(bufferedTornadoTrack,polyFootprint,{name:'Alto Mask'});
-            maskedTrack.properties.name = 'Alto Mask';
-            maskingSentinelApr16 = L.geoJSON(maskedTrack, {
-                style: function (feature) {
-                    return {
-                        color: 'grey',
-                        opacity: 1,
-                        fillOpacity:0.8,
-                    };
-                }
-            }).bindPopup(function (layer) {
-                return layer.feature.properties.name;
-            });
+            //let bbox = turf.bbox(polyFootprint);
+            //let bufferedTornadoTrack = turf.buffer(lineTornado,3,{units:'miles'});
+            //console.log(bufferedTornadoTrack);
+            //let maskedTrack = turf.mask(bufferedTornadoTrack,polyFootprint,{name:'Alto Mask'});
+            //maskedTrack.properties.name = 'Alto Mask';
+            // maskingSentinelApr16 = L.geoJSON(maskedTrack, {
+            //     style: function (feature) {
+            //         return {
+            //             color: 'grey',
+            //             opacity: 1,
+            //             fillOpacity:0.8,
+            //         };
+            //     }
+            // }).bindPopup(function (layer) {
+            //     return layer.feature.properties.name;
+            // });
         },
         created(){
             //Menu Components used to pass over Global Event hub these events from buttons
@@ -162,9 +168,16 @@
             this.$eventHub.$on('gatheringMapInfo',this.getMapInfo);
             this.$eventHub.$on('redrawMap',this.redrawMap);
             //toggleMaskTornado20190416
-            this.$eventHub.$on('toggleMaskTornado20190416', this.addRemoveMaskTornado);
-            //esriSnowLayer.addTo(movesMap);
+            //this.$eventHub.$on('toggleMaskTornado20190416', this.addRemoveMaskTornado);
+            this.$eventHub.$on('layerOn', this.layerOn); //add function to call
+            this.$eventHub.$on('layerOff', this.layerOff); // add function to call
         }
+    }
+    function layerOn(layer) {
+
+    }
+    function layerOff(layer) {
+
     }
     function resetMap(){
         movesMap.setView([32.3117, -99.77774], 6);
@@ -181,13 +194,13 @@
         //TODO:Convert to Vuex BAP 04-03-19
         this.$eventHub.$emit('returnedMapInfo',mapInfoObj);
     }
-    function addRemoveMaskTornado(){
-        if(movesMap.hasLayer(maskingSentinelApr16)){
-            movesMap.removeLayer(maskingSentinelApr16);
-        } else {
-            movesMap.addLayer(maskingSentinelApr16);
-        }
-    }
+    // function addRemoveMaskTornado(){
+    //     if(movesMap.hasLayer(maskingSentinelApr16)){
+    //         movesMap.removeLayer(maskingSentinelApr16);
+    //     } else {
+    //         movesMap.addLayer(maskingSentinelApr16);
+    //     }
+    // }
     function goToLocation(incomingObj){
         console.log("Go To Location");
         console.log(incomingObj);
