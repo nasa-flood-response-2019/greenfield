@@ -4,6 +4,8 @@
         <v-container fluid fill-height style="margin:0">
             <Navigation/>
             <Header/>
+<!--            <About/>-->
+            <scene/>
             <Map/>
         </v-container>
         </v-content>
@@ -14,14 +16,17 @@
     import Map from './components/Map.vue';
     import Header from './components/Header.vue';
     import Navigation from './components/Navigation.vue';
-
+    import scene from 'components/scene.vue';
+    import About from 'components/About.vue';
 
     export default {
         name: "App1",
         components: {
             Map,
             Navigation,
-            Header
+            Header,
+            scene,
+            About
         }
     }
 </script>

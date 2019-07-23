@@ -62,8 +62,8 @@
                 }
             );
             movesMap = L.map("mapTexas", {
-                center: [32.3117, -99.77774],
-                zoom: 6,
+                center: [38.3117, -98.77774],
+                zoom: 5,
                 layers: [
                     esriToposLayer
                 ]
@@ -89,8 +89,8 @@
                 style: function (feature) {
                     if(feature.properties.Snow_map === 'earlier by over 3 weeks')
                         return {color: "#003F8C"};//, fill_opacity: .99};//, weight: 2, opacity: 255
-                     else {
-                         if(feature.properties.Snow_map === 'earlier by 2 to 3 weeks')
+                    else {
+                        if(feature.properties.Snow_map === 'earlier by 2 to 3 weeks')
                             return { color: '#4585C4'};
                         else {
                             if(feature.properties.Snow_map === 'earlier by 1 to 2 weeks')
@@ -107,9 +107,9 @@
                                     {
                                         if(feature.properties.Snow_map === 'other')
                                             return {color: '#AAAAAA'};
-                                            else {
-                                                    return {color: '#E1E1E1'};
-                                                }
+                                        else {
+                                            return {color: '#E1E1E1'};
+                                        }
 
                                     }
                                 }
@@ -118,7 +118,7 @@
                     }
                 }
             }).addTo(movesMap);
-            document.getElementById("esriSnowLayer").visibilty = "hidden";
+            //document.getElementById("esriSnowLayer").visibilty = "hidden";
 
             /*            geoJsonQPF_Day1 = L.geoJson(qpfDay1,
                             {
@@ -216,13 +216,15 @@
         }
     }
     function layerOn(layer) {
-        document.getElementById(layer).visibility = "visible";
+        //document.getElementById(layer).visibility = "visible";
+        //not working
     }
     function layerOff(layer) {
-        document.getElementById(layer).visibility = "hidden";
+        //document.getElementById(layer).visibility = "hidden";
+        //not working
     }
     function resetMap(){
-        movesMap.setView([32.3117, -99.77774], 6);
+        movesMap.setView([38.3117, -98.77774], 5);
         movesMap.invalidateSize();
     }
     function redrawMap(){
@@ -252,122 +254,129 @@
         movesMap.setView(LatLngAry,incomingObj.ZoomLevel);
         movesMap.invalidateSize();
     }
-    function goToBookmark(incomingBookmark){
-        if(incomingBookmark==='seTx'){
-            movesMap.setView([30.072659, -95.202026], 8);
-        } else if (incomingBookmark==='southTx'){
-            movesMap.setView([27.550894, -98.195801], 8);
-        } else if (incomingBookmark==='ncTx'){
-            movesMap.setView([32.78612, -97.047729], 8);
-        } else if (incomingBookmark==='westTx'){
-            movesMap.setView([30.721768, -103.447266], 8);
-        } else if (incomingBookmark==='centralTx'){
-            movesMap.setView([30.229408, -98.146362], 8);
-        }
-        movesMap.invalidateSize();
-    }
-    function toggleLayer(incomingLayer){
-        //console.log(incomingLayer);
-        //console.log(esriToposLayer);
-        if (incomingLayer==='topo'){
-            console.log(incomingLayer);
-            if(!movesMap.hasLayer(esriToposLayer)){
-                movesMap.addLayer(esriToposLayer);
-            }
-            checkRemoveAerials();
-            checkRemoveStreets();
-            checkRemoveGoogleWMTS();
-        }
-        else if(incomingLayer==='aerials'){
-            if(movesMap.hasLayer(esriAerialsLayer)){
-                if(!movesMap.hasLayer(esriToposLayer)){
-                    movesMap.addLayer(esriToposLayer);
-                }
-                checkRemoveStreets();
-                checkRemoveAerials();
-                checkRemoveGoogleWMTS();
-            }
-            else {
-                checkRemoveGoogleWMTS();
-                movesMap.addLayer(esriAerialsLayer);
-                movesMap.addLayer(esriAerialsLabels);
-                checkRemoveTopo();
-                checkRemoveStreets();
-            }
-        } else if(incomingLayer==='streets'){
-            if(movesMap.hasLayer(esriStreetsLayer)){
-                if(!movesMap.hasLayer(esriToposLayer)){
-                    movesMap.addLayer(esriToposLayer);
-                }
-                checkRemoveStreets();
-                checkRemoveGoogleWMTS();
-                checkRemoveAerials();
-            }
-            else {
-                movesMap.addLayer(esriStreetsLayer);
-                checkRemoveGoogleWMTS();
-                checkRemoveTopo();
-                checkRemoveAerials();
-            }
-        } else if(incomingLayer==='reset'){
-            //console.log('Reset');
-            if(!movesMap.hasLayer(esriToposLayer)){
-                movesMap.addLayer(esriToposLayer);
-                checkRemoveAerials();
-                checkRemoveStreets();
-                checkRemoveGoogleWMTS();
-            }
+    function goToBookmark(incomingBookmark) {
+        if (incomingBookmark === 'California') {
+            movesMap.setView([36.7783, -119.4179], 6);
+        } else if (incomingBookmark === 'Florida') {
+            movesMap.setView([27.6648, -81.5158], 6);
+        } else if (incomingBookmark === 'Texas') {
             movesMap.setView([32.3117, -99.77774], 6);
-        }  else if(incomingLayer==='google'){
-            if(movesMap.hasLayer(googleImageryLayer)){
-                movesMap.removeLayer(googleImageryLayer);
-                checkRemoveLabelsOnly();
-                checkRemoveAerials();
-                if(!movesMap.hasLayer(esriToposLayer)){
+        } else {
+            movesMap.setView([38.3117, -98.77774], 5);
+            // } else if (incomingBookmark==='westTx'){
+            //     movesMap.setView([30.721768, -103.447266], 8);
+            // } else if (incomingBookmark==='centralTx'){
+            //     movesMap.setView([30.229408, -98.146362], 8);
+            // }
+            //movesMap.resetMap();
+            //movesMap.invalidateSize();
+        }
+        }
+
+        function toggleLayer(incomingLayer) {
+            //console.log(incomingLayer);
+            //console.log(esriToposLayer);
+            if (incomingLayer === 'topo') {
+                console.log(incomingLayer);
+                if (!movesMap.hasLayer(esriToposLayer)) {
                     movesMap.addLayer(esriToposLayer);
                 }
-                //console.log("Am I here?");
-            } else {
-                if(!movesMap.hasLayer(esriToposLayer)){
-                    movesMap.addLayer(esriToposLayer);
-                }
-                movesMap.addLayer(googleImageryLayer);
                 checkRemoveAerials();
                 checkRemoveStreets();
-                if(!movesMap.hasLayer(esriAerialsLabels))
-                {
+                checkRemoveGoogleWMTS();
+            } else if (incomingLayer === 'aerials') {
+                if (movesMap.hasLayer(esriAerialsLayer)) {
+                    if (!movesMap.hasLayer(esriToposLayer)) {
+                        movesMap.addLayer(esriToposLayer);
+                    }
+                    checkRemoveStreets();
+                    checkRemoveAerials();
+                    checkRemoveGoogleWMTS();
+                } else {
+                    checkRemoveGoogleWMTS();
+                    movesMap.addLayer(esriAerialsLayer);
                     movesMap.addLayer(esriAerialsLabels);
-                    //movesMap.bringToFront(esriAerialsLabels);
+                    checkRemoveTopo();
+                    checkRemoveStreets();
+                }
+            } else if (incomingLayer === 'streets') {
+                if (movesMap.hasLayer(esriStreetsLayer)) {
+                    if (!movesMap.hasLayer(esriToposLayer)) {
+                        movesMap.addLayer(esriToposLayer);
+                    }
+                    checkRemoveStreets();
+                    checkRemoveGoogleWMTS();
+                    checkRemoveAerials();
+                } else {
+                    movesMap.addLayer(esriStreetsLayer);
+                    checkRemoveGoogleWMTS();
+                    checkRemoveTopo();
+                    checkRemoveAerials();
+                }
+            } else if (incomingLayer === 'reset') {
+                //console.log('Reset');
+                if (!movesMap.hasLayer(esriToposLayer)) {
+                    movesMap.addLayer(esriToposLayer);
+                    checkRemoveAerials();
+                    checkRemoveStreets();
+                    checkRemoveGoogleWMTS();
+                }
+                movesMap.setView([32.3117, -99.77774], 6);
+            } else if (incomingLayer === 'google') {
+                if (movesMap.hasLayer(googleImageryLayer)) {
+                    movesMap.removeLayer(googleImageryLayer);
+                    checkRemoveLabelsOnly();
+                    checkRemoveAerials();
+                    if (!movesMap.hasLayer(esriToposLayer)) {
+                        movesMap.addLayer(esriToposLayer);
+                    }
+                    //console.log("Am I here?");
+                } else {
+                    if (!movesMap.hasLayer(esriToposLayer)) {
+                        movesMap.addLayer(esriToposLayer);
+                    }
+                    movesMap.addLayer(googleImageryLayer);
+                    checkRemoveAerials();
+                    checkRemoveStreets();
+                    if (!movesMap.hasLayer(esriAerialsLabels)) {
+                        movesMap.addLayer(esriAerialsLabels);
+                        //movesMap.bringToFront(esriAerialsLabels);
+                    }
                 }
             }
         }
-    }
-    function checkRemoveLabelsOnly(){
-        if(movesMap.hasLayer(esriAerialsLabels)){
-            movesMap.removeLayer(esriAerialsLabels);
+
+        function checkRemoveLabelsOnly() {
+            if (movesMap.hasLayer(esriAerialsLabels)) {
+                movesMap.removeLayer(esriAerialsLabels);
+            }
         }
-    }
-    function checkRemoveAerials(){
-        if(movesMap.hasLayer(esriAerialsLayer)){
-            movesMap.removeLayer(esriAerialsLayer);
-            movesMap.removeLayer(esriAerialsLabels);
+
+        function checkRemoveAerials() {
+            if (movesMap.hasLayer(esriAerialsLayer)) {
+                movesMap.removeLayer(esriAerialsLayer);
+                movesMap.removeLayer(esriAerialsLabels);
+            }
         }
-    }
-    function checkRemoveStreets(){
-        if(movesMap.hasLayer(esriStreetsLayer)){
-            movesMap.removeLayer(esriStreetsLayer);
+
+        function checkRemoveStreets() {
+            if (movesMap.hasLayer(esriStreetsLayer)) {
+                movesMap.removeLayer(esriStreetsLayer);
+            }
         }
-    }
-    function checkRemoveTopo(){
-        if(movesMap.hasLayer(esriToposLayer)) {
-            movesMap.removeLayer(esriToposLayer);
+
+        function checkRemoveTopo() {
+            if (movesMap.hasLayer(esriToposLayer)) {
+                movesMap.removeLayer(esriToposLayer);
+            }
         }
-    }
-    function checkRemoveGoogleWMTS(){
-        if(movesMap.hasLayer(googleImageryLayer)){
-            movesMap.removeLayer(googleImageryLayer);
-        }
-        checkRemoveLabelsOnly();
+
+        function checkRemoveGoogleWMTS() {
+            if (movesMap.hasLayer(googleImageryLayer)) {
+                movesMap.removeLayer(googleImageryLayer);
+            }
+            checkRemoveLabelsOnly();
+
     }
 
 </script>

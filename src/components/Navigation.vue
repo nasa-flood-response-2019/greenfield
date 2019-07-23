@@ -4,7 +4,7 @@
                          :mini-variant.sync="mini"
                          hide-overlay
                          stateless
-                         v-bind:width="350"
+                         v-bind:width="400"
     >
         <v-toolbar flat class="transparent">
             <v-list class="pa-0">
@@ -27,7 +27,11 @@
                 <v-divider></v-divider>
                 <!--                <v-list-group-->
                 <v-divider></v-divider>
-                <v-list-tile v-on:click="emitReset()">
+                <v-list-group
+                        :value="false"
+                >
+                <template v-slot:activator>
+                    <v-list-tile>
                     <v-list-tile-avatar>
                         <v-btn
                                 icon
@@ -40,11 +44,27 @@
                         <v-list-tile-title>{{items[0].title}}</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
+                </template>
+                <v-list-tile
+                        v-for="(bookmarks, i) in bookmarks"
+                        :key="i"
+                        @click= ""
+                        v-on:click="emitBookMark(bookmarks[0])"
+                >
+                    <!--                        trying to toggle between bookmarks-->
+                    <v-list-tile-title v-text="bookmarks[0]"></v-list-tile-title>
+                    <v-list-tile-action>
+                        <v-icon v-text="bookmarks[1]"></v-icon>
+                    </v-list-tile-action>
+                </v-list-tile>
+                </v-list-group>
+
+
                 <v-list-group
                         :value="false"
                 >
                     <!--                        prepend-icon="map"-->
-                    ​
+
                     <template v-slot:activator>
                         <v-list-tile>
                             <v-list-tile-avatar>
@@ -60,23 +80,14 @@
                             </v-list-tile-content>
                         </v-list-tile>
                     </template>
-                    <!--                    <v-list-group-->
-                    <!--                            no-action-->
-                    <!--                            sub-group-->
-                    <!--                            :value="false"-->
-                    <!--                    >-->
-                    <!--                        <template v-slot:activator>-->
-                    <!--                            <v-list-tile>-->
-                    <!--                                <v-list-tile-title>Basemap 1</v-list-tile-title>-->
-                    <!--                            </v-list-tile>-->
-                    <!--                        </template>-->
+
                     <v-list-tile
                             v-for="(basemap1, i) in basemap1"
                             :key="i"
                             @click= ""
                             v-on:click="emitLayer(basemap1[2])"
                     >
-<!--                        trying to toggle between basemaps-->
+                        <!--                        trying to toggle between basemaps-->
                         <v-list-tile-title v-text="basemap1[0]"></v-list-tile-title>
                         <v-list-tile-action>
                             <v-icon v-text="basemap1[1]"></v-icon>
@@ -116,11 +127,12 @@
                         <v-list-tile-content>
                             <v-list-tile-title v-text="layers[0]"></v-list-tile-title>
                         </v-list-tile-content>
-                    </v-list-tile>
+                    </v-list-tile >
                     <!--                    end of the first chunk of code for the checkbox-->
 
                 </v-list-group>
-                <v-list-tile>
+                <v-list-tile @click="openScene()">
+<!--                    not calling any function or printing anything out to the console, so unable to work on toggling the sheet for scene-->
                     <v-list-tile-avatar>
                         <v-btn
                                 icon
@@ -133,7 +145,7 @@
                         <v-list-tile-title>{{items[3].title}}</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
-                <v-list-tile>
+                <v-list-tile v-on:click="">
                     <v-list-tile-avatar>
                         <v-btn
                                 icon
@@ -152,6 +164,8 @@
 </template>
 <script>
     //import Header from './components/Header.vue';
+    //import scene from 'components/scene.vue';
+
     export default {
         name: "Navigation",
         props:
@@ -162,7 +176,7 @@
             return {
                 drawer: true,
                 items: [
-                    {title: 'Reset Map', icon: 'home'},
+                    {title: 'Bookmarks', icon: 'bookmark'},
                     {title: 'Basemaps', icon: 'map'},
                     {title: 'Data Layers', icon: 'layers'},
                     //embed sliders to data layers
@@ -178,8 +192,17 @@
                     //['Google Imagery', 'map', 'google']
                 ],
                 layers: [
-                    ['Data 1', 'layers', false, 'esriSnowLayer'],
-                    ['Data 2', 'layers', false]
+                    //made navigation drawer a little wider so that the snowmelt layer is completely shown
+                    ['Change in Snowmelt Timing\n(1975-2040)', 'layers', false, 'esriSnowLayer'],
+                    ['Population Density', 'layers', false],
+                    ['Rain Gauges', 'layers', false],
+                    ['Precipitation Change by 2050', 'layers', false]
+                ],
+                bookmarks: [
+                    ['United States', 'bookmark'],
+                    ['California', 'bookmark'],
+                    ['Florida', 'bookmark'],
+                    ['Texas', 'bookmark'],
                 ],
                 mini: true,
                 right: null,
@@ -190,16 +213,30 @@
             emitLayer: function(layer){
                 this.$eventHub.$emit('toggleMapLayers', layer);
             },
-            emitReset: function() {
-                this.$eventHub.$emit('resetMap');
+            emitBookMark: function(bookmark){
+                this.$eventHub.$emit('goToBookmarks', bookmark);
             },
+            // emitReset: function() {
+            //     this.$eventHub.$emit('resetMap');
+            // },
             test: function(layer) {
                 if(!layer[2])
-                    console.log('on');//this.$eventHub.$emit('layerOn', layer[3]);
+                    this.$eventHub.$emit('layerOn', layer[3]);
                 else
-                    console.log('off');//this.$eventHub.$emit('layerOff', layer[3]);
+                    this.$eventHub.$emit('layerOff', layer[3]);
             },
-        }
+            openAbout: function(){
+                this.$eventHub.$emit('openAbout');
+            },
+            openScene: function(){
+                this.$eventHub.$emit('openScene');
+                //console.log('scene/nav working'); this is working
+            }
+        }//,
+        // components:
+        //     {
+        //         scene
+        //     }
     }
 
 </script>
