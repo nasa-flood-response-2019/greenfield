@@ -1,21 +1,20 @@
 <template>
-    <v-flex>
+<!--    <v-flex>-->
 
         <v-sheet id="sheet1"
-                class="d-flex"
+
                 color="grey lighten-3"
                 height="450"
                  width="450"
-
         >
         <p>Hello, this is for the 3Dscene</p>
         </v-sheet>
-        </v-flex>
+<!--        </v-flex>-->
 </template>
 
 <script>
     export default {
-        name: "scene",
+        name: "Scene",
         components: {
             SheetFooter: {
                 functional: true,
@@ -31,22 +30,26 @@
                         }
                     }, children)
                 }
-            },
-            created()
-            {
-                this.$eventHub.$on('openScene', this.sceneOpen1);
-            },
-            methods:
-                {
-                    sceneOpen1: function () {
-                        console.log('scene working');
-                        //toggle visibility for 3Dscene
-                        //not working lol
+            }
+        },
+        methods:{
+                sceneOpen1(){
+                     let scene = document.getElementById("sheet1");
+                    if (scene.style.display === "none") {
+                        scene.style.display = "block";
+                    } else {
+                        scene.style.display = "none";
                     }
                 }
+        },
+        created()
+        {
+            this.$eventHub.$on('openScene', this.sceneOpen1);
+            //document.getElementById("sheet1").style.display = 'none';
         }
 
     }
+
 </script>
 
 <style scoped>
@@ -54,6 +57,7 @@
         position: absolute;
         bottom: 3%;
         right: 2%;
-        z-index: 2000;
+        z-index: 1008;
+        /*display: none;*/
     }
 </style>

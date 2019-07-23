@@ -4,8 +4,8 @@
         <v-container fluid fill-height style="margin:0">
             <Navigation/>
             <Header/>
-<!--            <About/>-->
-            <scene/>
+            <About style="display: none"/>
+            <Scene style="display: none"/>
             <Map/>
         </v-container>
         </v-content>
@@ -16,7 +16,7 @@
     import Map from './components/Map.vue';
     import Header from './components/Header.vue';
     import Navigation from './components/Navigation.vue';
-    import scene from 'components/scene.vue';
+    import Scene from 'components/scene.vue';
     import About from 'components/About.vue';
 
     export default {
@@ -25,8 +25,18 @@
             Map,
             Navigation,
             Header,
-            scene,
+            Scene,
             About
+            // },
+            // methods:{
+            //     carryScene(){
+            //         console.log("Hmmm - Yay");
+            //         this.$eventHub.$emit("sceneOpen")
+            //     }
+            // },
+            // created() {
+            //     this.$eventHub.$on('openScene', this.carryScene);
+            // }
         }
     }
 </script>

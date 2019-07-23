@@ -42,7 +42,8 @@
             redrawMap,
             goToBookmark,
             goToLocation,
-            getMapInfo
+            getMapInfo,
+            changeLayer
         },
         mounted(){
             //console.log(this.$store.state.count);
@@ -69,16 +70,39 @@
                 ]
             });
 
-            // popDenseLayer = esri.featureLayer({
-            //     url:'http://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/Congressional_District_Demographics/FeatureServer/0'
-            //     simplifyFactor: .5,
-            //         precision: 10,
-            //         //may need to use a different property in order to fill polygons correctly
-            //         style: function (feature) {
-            //             if (feature.properties.POPDENS_CY === 'earlier by over 3 weeks')
-            //                 return {color: "#003F8C"};//, fill_opacity: .99};//, weight: 2, opacity: 255
-            //         }
+            // legend = L.control({
+            //     // position: 'topright'
             // }).addTo(movesMap);
+
+            // legend = L.control({ position: "topright" });
+            //
+            // legend.onAdd = function(movesMap) {
+            //     var div = L.DomUtil.create("div", "legend");
+            //     div.innerHTML += "<h4>Tegnforklaring</h4>";
+            //     div.innerHTML += '<i style="background: #477AC2"></i><span>Water</span><br>';
+            //     div.innerHTML += '<i style="background: #448D40"></i><span>Forest</span><br>';
+            //     div.innerHTML += '<i style="background: #E6E696"></i><span>Land</span><br>';
+            //     div.innerHTML += '<i style="background: #E8E6E0"></i><span>Residential</span><br>';
+            //     div.innerHTML += '<i style="background: #FFFFFF"></i><span>Ice</span><br>';
+            //     div.innerHTML += '<i class="icon" style="background-image: url(https://d30y9cdsu7xlg0.cloudfront.net/png/194515-200.png);background-repeat: no-repeat;"></i><span>Grænse</span><br>';
+            //
+            //
+            //
+            //     return div;
+            // };
+            //
+            // legend.addTo(movesMap);
+
+            popDenseLayer = esri.featureLayer({
+                url:'http://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/Congressional_District_Demographics/FeatureServer/0',
+                simplifyFactor: .5,
+                precision: 10,
+                //may need to use a different property in order to fill polygons correctly
+                style: function (feature) {
+                    if (feature.properties.POPDENS_CY < 100)
+                        return {fillColor: "red"};//, fill_opacity: .99};//, weight: 2, opacity: 255
+                }
+            }).addTo(movesMap);
 
             //unable to fill polygons
             esriSnowLayer = esri.featureLayer({
@@ -88,36 +112,27 @@
                 //may need to use a different property in order to fill polygons correctly
                 style: function (feature) {
                     if(feature.properties.Snow_map === 'earlier by over 3 weeks')
-                        return {color: "#003F8C"};//, fill_opacity: .99};//, weight: 2, opacity: 255
-                    else {
-                        if(feature.properties.Snow_map === 'earlier by 2 to 3 weeks')
-                            return { color: '#4585C4'};
-                        else {
-                            if(feature.properties.Snow_map === 'earlier by 1 to 2 weeks')
-                                return {color: '#7DB5FA'};
-                            else
-                            {
-                                if(feature.properties.Snow_map === 'less than a week')
-                                    return {color: '#BED2FF'};
-                                else
-                                {
-                                    if(feature.properties.Snow_map === 'later by over a week')
-                                        return {color: '#BED2FF'};
-                                    else
-                                    {
-                                        if(feature.properties.Snow_map === 'other')
-                                            return {color: '#AAAAAA'};
-                                        else {
-                                            return {color: '#E1E1E1'};
-                                        }
+                        return {fillColor: "#003F8C", fillOpacity: '1.0'};//, fill_opacity: .99};//, weight: 2, opacity: 255
+                    else if (feature.properties.Snow_map === 'earlier by 2 to 3 weeks')
+                        return {fillColor: '#4585C4', fillOpacity: '1.0'};
 
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    else if(feature.properties.Snow_map === 'earlier by 1 to 2 weeks')
+                        return {fillColor: '#7DB5FA', fillOpacity: '1.0'};
+                    else if(feature.properties.Snow_map === 'less than a week')
+                        return {fillColor: '#BED2FF', fillOpacity: '1.0'};
+                    else if(feature.properties.Snow_map === 'later by over a week')
+                        return {fillColor: '#BED2FF', fillOpacity: '1.0'};
+                    else if(feature.properties.Snow_map === 'other')
+                        return {fillColor: '#AAAAAA', fillOpacity: '1.0'};
+                    else
+                        return {fillColor: '#E1E1E1'};
+
+
                 }
+
             }).addTo(movesMap);
+
+            movesMap.removeLayer(esriSnowLayer);
             //document.getElementById("esriSnowLayer").visibilty = "hidden";
 
             /*            geoJsonQPF_Day1 = L.geoJson(qpfDay1,
@@ -211,18 +226,32 @@
             this.$eventHub.$on('redrawMap',this.redrawMap);
             //toggleMaskTornado20190416
             //this.$eventHub.$on('toggleMaskTornado20190416', this.addRemoveMaskTornado);
-            this.$eventHub.$on('layerOn', this.layerOn); //add function to call
-            this.$eventHub.$on('layerOff', this.layerOff); // add function to call
+            this.$eventHub.$on('toggleLayer', this.changeLayer); //add function to call
+            // this.$eventHub.$on('layerOff', this.layerOff); // add function to call
         }
     }
-    function layerOn(layer) {
+    function changeLayer(layer) {
+        console.log("message recieved and layer on function started");
+        if(layer[2]){
+            movesMap.removeLayer(getLayer(layer[3]));
+        }
+        else{
+            movesMap.addLayer(getLayer(layer[3]));
+        }
+
         //document.getElementById(layer).visibility = "visible";
         //not working
     }
-    function layerOff(layer) {
-        //document.getElementById(layer).visibility = "hidden";
-        //not working
+    function getLayer(layerName){
+        console.log("layaerArr function started");
+        if(layerName=="esriSnowLayer"){
+            return esriSnowLayer;
+        }
+        else{
+            return null;
+        }
     }
+
     function resetMap(){
         movesMap.setView([38.3117, -98.77774], 5);
         movesMap.invalidateSize();
@@ -271,111 +300,111 @@
             //movesMap.resetMap();
             //movesMap.invalidateSize();
         }
-        }
+    }
 
-        function toggleLayer(incomingLayer) {
-            //console.log(incomingLayer);
-            //console.log(esriToposLayer);
-            if (incomingLayer === 'topo') {
-                console.log(incomingLayer);
+    function toggleLayer(incomingLayer) {
+        //console.log(incomingLayer);
+        //console.log(esriToposLayer);
+        if (incomingLayer === 'topo') {
+            console.log(incomingLayer);
+            if (!movesMap.hasLayer(esriToposLayer)) {
+                movesMap.addLayer(esriToposLayer);
+            }
+            checkRemoveAerials();
+            checkRemoveStreets();
+            checkRemoveGoogleWMTS();
+        } else if (incomingLayer === 'aerials') {
+            if (movesMap.hasLayer(esriAerialsLayer)) {
                 if (!movesMap.hasLayer(esriToposLayer)) {
                     movesMap.addLayer(esriToposLayer);
                 }
+                checkRemoveStreets();
+                checkRemoveAerials();
+                checkRemoveGoogleWMTS();
+            } else {
+                checkRemoveGoogleWMTS();
+                movesMap.addLayer(esriAerialsLayer);
+                movesMap.addLayer(esriAerialsLabels);
+                checkRemoveTopo();
+                checkRemoveStreets();
+            }
+        } else if (incomingLayer === 'streets') {
+            if (movesMap.hasLayer(esriStreetsLayer)) {
+                if (!movesMap.hasLayer(esriToposLayer)) {
+                    movesMap.addLayer(esriToposLayer);
+                }
+                checkRemoveStreets();
+                checkRemoveGoogleWMTS();
+                checkRemoveAerials();
+            } else {
+                movesMap.addLayer(esriStreetsLayer);
+                checkRemoveGoogleWMTS();
+                checkRemoveTopo();
+                checkRemoveAerials();
+            }
+        } else if (incomingLayer === 'reset') {
+            //console.log('Reset');
+            if (!movesMap.hasLayer(esriToposLayer)) {
+                movesMap.addLayer(esriToposLayer);
                 checkRemoveAerials();
                 checkRemoveStreets();
                 checkRemoveGoogleWMTS();
-            } else if (incomingLayer === 'aerials') {
-                if (movesMap.hasLayer(esriAerialsLayer)) {
-                    if (!movesMap.hasLayer(esriToposLayer)) {
-                        movesMap.addLayer(esriToposLayer);
-                    }
-                    checkRemoveStreets();
-                    checkRemoveAerials();
-                    checkRemoveGoogleWMTS();
-                } else {
-                    checkRemoveGoogleWMTS();
-                    movesMap.addLayer(esriAerialsLayer);
-                    movesMap.addLayer(esriAerialsLabels);
-                    checkRemoveTopo();
-                    checkRemoveStreets();
-                }
-            } else if (incomingLayer === 'streets') {
-                if (movesMap.hasLayer(esriStreetsLayer)) {
-                    if (!movesMap.hasLayer(esriToposLayer)) {
-                        movesMap.addLayer(esriToposLayer);
-                    }
-                    checkRemoveStreets();
-                    checkRemoveGoogleWMTS();
-                    checkRemoveAerials();
-                } else {
-                    movesMap.addLayer(esriStreetsLayer);
-                    checkRemoveGoogleWMTS();
-                    checkRemoveTopo();
-                    checkRemoveAerials();
-                }
-            } else if (incomingLayer === 'reset') {
-                //console.log('Reset');
-                if (!movesMap.hasLayer(esriToposLayer)) {
-                    movesMap.addLayer(esriToposLayer);
-                    checkRemoveAerials();
-                    checkRemoveStreets();
-                    checkRemoveGoogleWMTS();
-                }
-                movesMap.setView([32.3117, -99.77774], 6);
-            } else if (incomingLayer === 'google') {
-                if (movesMap.hasLayer(googleImageryLayer)) {
-                    movesMap.removeLayer(googleImageryLayer);
-                    checkRemoveLabelsOnly();
-                    checkRemoveAerials();
-                    if (!movesMap.hasLayer(esriToposLayer)) {
-                        movesMap.addLayer(esriToposLayer);
-                    }
-                    //console.log("Am I here?");
-                } else {
-                    if (!movesMap.hasLayer(esriToposLayer)) {
-                        movesMap.addLayer(esriToposLayer);
-                    }
-                    movesMap.addLayer(googleImageryLayer);
-                    checkRemoveAerials();
-                    checkRemoveStreets();
-                    if (!movesMap.hasLayer(esriAerialsLabels)) {
-                        movesMap.addLayer(esriAerialsLabels);
-                        //movesMap.bringToFront(esriAerialsLabels);
-                    }
-                }
             }
-        }
-
-        function checkRemoveLabelsOnly() {
-            if (movesMap.hasLayer(esriAerialsLabels)) {
-                movesMap.removeLayer(esriAerialsLabels);
-            }
-        }
-
-        function checkRemoveAerials() {
-            if (movesMap.hasLayer(esriAerialsLayer)) {
-                movesMap.removeLayer(esriAerialsLayer);
-                movesMap.removeLayer(esriAerialsLabels);
-            }
-        }
-
-        function checkRemoveStreets() {
-            if (movesMap.hasLayer(esriStreetsLayer)) {
-                movesMap.removeLayer(esriStreetsLayer);
-            }
-        }
-
-        function checkRemoveTopo() {
-            if (movesMap.hasLayer(esriToposLayer)) {
-                movesMap.removeLayer(esriToposLayer);
-            }
-        }
-
-        function checkRemoveGoogleWMTS() {
+            movesMap.setView([32.3117, -99.77774], 6);
+        } else if (incomingLayer === 'google') {
             if (movesMap.hasLayer(googleImageryLayer)) {
                 movesMap.removeLayer(googleImageryLayer);
+                checkRemoveLabelsOnly();
+                checkRemoveAerials();
+                if (!movesMap.hasLayer(esriToposLayer)) {
+                    movesMap.addLayer(esriToposLayer);
+                }
+                //console.log("Am I here?");
+            } else {
+                if (!movesMap.hasLayer(esriToposLayer)) {
+                    movesMap.addLayer(esriToposLayer);
+                }
+                movesMap.addLayer(googleImageryLayer);
+                checkRemoveAerials();
+                checkRemoveStreets();
+                if (!movesMap.hasLayer(esriAerialsLabels)) {
+                    movesMap.addLayer(esriAerialsLabels);
+                    //movesMap.bringToFront(esriAerialsLabels);
+                }
             }
-            checkRemoveLabelsOnly();
+        }
+    }
+
+    function checkRemoveLabelsOnly() {
+        if (movesMap.hasLayer(esriAerialsLabels)) {
+            movesMap.removeLayer(esriAerialsLabels);
+        }
+    }
+
+    function checkRemoveAerials() {
+        if (movesMap.hasLayer(esriAerialsLayer)) {
+            movesMap.removeLayer(esriAerialsLayer);
+            movesMap.removeLayer(esriAerialsLabels);
+        }
+    }
+
+    function checkRemoveStreets() {
+        if (movesMap.hasLayer(esriStreetsLayer)) {
+            movesMap.removeLayer(esriStreetsLayer);
+        }
+    }
+
+    function checkRemoveTopo() {
+        if (movesMap.hasLayer(esriToposLayer)) {
+            movesMap.removeLayer(esriToposLayer);
+        }
+    }
+
+    function checkRemoveGoogleWMTS() {
+        if (movesMap.hasLayer(googleImageryLayer)) {
+            movesMap.removeLayer(googleImageryLayer);
+        }
+        checkRemoveLabelsOnly();
 
     }
 
@@ -395,4 +424,8 @@
     .leaflet-top .leaflet-control {
         margin-top: 60px !important;
     }
+
+
+
+
 </style>
