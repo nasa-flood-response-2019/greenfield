@@ -1,6 +1,6 @@
 <template>
     <v-btn id="button" class="mx-2" fab dark color="indigo" @click="openScene">
-        <v-icon dark>add</v-icon>
+        <v-icon dark>3d_rotation</v-icon>
     </v-btn>
 </template>
 
