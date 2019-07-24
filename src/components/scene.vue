@@ -5,13 +5,24 @@
              height="350"
              width="350"
     >
-        <p>Hello, this is for the 3Dscene</p>
+        <h3>Layer Opacity</h3>
+<!--        <v-container>-->
+            <v-slider v-model="volume"
+                      @change='onChange($event)'
+                      label='Snowmelt Timing'>
+            </v-slider>
+<!--        </v-container>-->
     </v-sheet>
     <!--        </v-flex>-->
 </template>
 <script>
     export default {
         name: "Scene",
+        data () {
+            return {
+                volume: 10,
+            }
+        },
         components: {
             SheetFooter: {
                 functional: true,
@@ -36,6 +47,9 @@
                 } else {
                     scene.style.display = "none";
                 }
+            },
+            onChange: function(event) {
+                console.log(event);
             }
         },
         created()
