@@ -124,8 +124,22 @@
                     </v-list-tile >
                     <!--                    end of the first chunk of code for the checkbox-->
                 </v-list-group>
-                <v-list-tile @click="openScene()">
-                    <!--                    not calling any function or printing anything out to the console, so unable to work on toggling the sheet for scene-->
+<!--                openScene() opens the 3D model-->
+<!--                <v-list-tile @click="onClick">-->
+<!--                    &lt;!&ndash;                    not calling any function or printing anything out to the console, so unable to work on toggling the sheet for scene&ndash;&gt;-->
+<!--                    <v-list-tile-avatar>-->
+<!--                        <v-btn-->
+<!--                                icon-->
+<!--                                @click.stop="mini = !mini"-->
+<!--                        >-->
+<!--                            <v-icon>{{items[3].icon}}</v-icon>-->
+<!--                        </v-btn>-->
+<!--                    </v-list-tile-avatar>-->
+<!--                    <v-list-tile-content>-->
+<!--                        <v-list-tile-title>{{items[3].title}}</v-list-tile-title>-->
+<!--                    </v-list-tile-content>-->
+<!--                </v-list-tile>-->
+                <v-list-tile v-on:click="openAbout()">
                     <v-list-tile-avatar>
                         <v-btn
                                 icon
@@ -136,19 +150,6 @@
                     </v-list-tile-avatar>
                     <v-list-tile-content>
                         <v-list-tile-title>{{items[3].title}}</v-list-tile-title>
-                    </v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile v-on:click="openAbout()">
-                    <v-list-tile-avatar>
-                        <v-btn
-                                icon
-                                @click.stop="mini = !mini"
-                        >
-                            <v-icon>{{items[4].icon}}</v-icon>
-                        </v-btn>
-                    </v-list-tile-avatar>
-                    <v-list-tile-content>
-                        <v-list-tile-title>{{items[4].title}}</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
             </v-list>
@@ -174,7 +175,7 @@
                     //embed sliders to data layers
                     //have sliders pop up on screen when new data layer added
                     // { title: 'Opacity', icon: 'opacity' },
-                    {title: '3D Scene', icon: '3d_rotation'},
+                    // {title: '3D Scene', icon: '3d_rotation'},
                     {title: 'About', icon: 'info'}
                 ],
                 basemap1: [
@@ -222,11 +223,16 @@
             },
             openAbout: function(){
                 this.$eventHub.$emit('openAbout');
-            },
-            openScene: function(){
-                this.$eventHub.$emit('openScene');
-                //console.log('scene/nav working'); this is working
-            }
+            }//,
+            // onClick: function(){
+            //     this.$eventHub.$emit('openScene');
+            //     console.log("started onClick() function");
+            //     // the three latter numbers are the x,y,z coordinates, respectively
+            //     this.$emit('clicked', '34568765', '-1222', '4565');
+            //     console.log("emitted clicked");
+            //     this.$eventHub.$emit('openBox');
+            //     console.log("emitted openBox");
+            // }
         }//,
         // components:
         //     {
@@ -238,7 +244,7 @@
     #drawer{
         z-index: 1010;
         position: absolute;
-        top: 55px;
+        top: 75px;
         left: 0px;
     }
 </style>
