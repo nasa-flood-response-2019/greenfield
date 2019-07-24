@@ -14,7 +14,8 @@
 <!--        </v-container>-->
     </v-sheet>
     <!--        </v-flex>-->
-</template>
+</template>'
+
 <script>
     export default {
         name: "Scene",
