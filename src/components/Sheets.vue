@@ -1,27 +1,27 @@
 <template>
     <div id="hello">
     <v-sheet id="sheet1"
-             color="deep-purple lighten-4"
-             height="350"
-             width="350"
+             color="deep-purple lighten-5"
+             height="250"
+             width="400"
     >
     </v-sheet>
     <v-sheet id="sheet2"
-             color="deep-purple lighten-3"
-             height="350"
-             width="350"
+             color="deep-purple lighten-4"
+             height="250"
+             width="400"
     >
     </v-sheet>
     <v-sheet id="sheet3"
-             color="deep-purple lighten-5"
-             height="350"
-             width="350"
+             color="deep-purple lighten-3"
+             height="250"
+             width="400"
     >
     </v-sheet>
     <v-sheet id="sheet4"
              color="deep-purple lighten-2"
-             height="350"
-             width="350"
+             height="250"
+             width="400"
     >
     </v-sheet>
     </div>
@@ -53,6 +53,26 @@
 <style scoped>
     #hello{
         z-index: 4000;
+    }
+    #sheet1{
+        position: absolute;
+        top: 11%;
+        right: 1%;
+    }
+    #sheet2{
+        position: absolute;
+        top: 11%;
+        right: 1%;
+    }
+    #sheet3{
+        position: absolute;
+        top: 11%;
+        right: 1%;
+    }
+    #sheet4{
+        position: absolute;
+        top: 11%;
+        right: 1%;
     }
 
 </style>

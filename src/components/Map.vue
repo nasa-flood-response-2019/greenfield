@@ -204,7 +204,7 @@
                 let icon = L.icon({
                     iconUrl: uri,
                     shadowUrl: uri,
-                    iconSize:     [30, 30],
+                    iconSize:     [20, 20],
                     shadowSize:   [0, 0],
                     popupAnchor:  [0, -30]
                 });
@@ -497,7 +497,10 @@
             movesMap.setView([27.6648, -81.5158], 6);
         } else if (incomingBookmark === 'Texas') {
             movesMap.setView([32.3117, -99.77774], 6);
-        } else {
+        } else if(incomingBookmark === 'Port Arthur') {
+            movesMap.setView([29.945527, -93.924437], 14);
+        }
+        else {
             movesMap.setView([38.3117, -98.77774], 5);
             // } else if (incomingBookmark==='westTx'){
             //     movesMap.setView([30.721768, -103.447266], 8);

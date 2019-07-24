@@ -1,27 +1,30 @@
 <template>
     <!--    <v-flex>-->
-    <v-sheet id="sheet3D"
-             color="grey lighten-3"
-             height="350"
-             width="350"
-    >
-        <h3>Layer Opacity</h3>
-<!--        <v-container>-->
-            <v-slider v-model="volume"
+    <v-container v-show="sheetToggleFlg">
+        <v-sheet id="sheet1"
+                 color="grey lighten-3"
+                 height="350"
+                 width="350"
+        >
+            <h3>Layer Opacity</h3>
+            <!--        <v-container>-->
+            <v-slider id="slider"
                       @change='onChange($event)'
+                      v-model="volume"
                       label='Snowmelt Timing'>
             </v-slider>
-<!--        </v-container>-->
-    </v-sheet>
+            <!--        </v-container>-->
+        </v-sheet>
+    </v-container>
     <!--        </v-flex>-->
-</template>'
-
+</template>
 <script>
     export default {
         name: "Scene",
         data () {
             return {
                 volume: 10,
+                sheetToggleFlg: false,
             }
         },
         components: {
@@ -42,15 +45,12 @@
         },
         methods:{
             sceneOpen1(){
-                let scene = document.getElementById("sheet3D");
-                if (scene.style.display === "none") {
-                    scene.style.display = "block";
-                } else {
-                    scene.style.display = "none";
-                }
+                document.getElementById("sheet1").style.zIndex = '100000';
+                this.sheetToggleFlg = !this.sheetToggleFlg;
             },
             onChange: function(event) {
                 console.log(event);
+                //console.log(document.querySelector("#sheet1").style.display);
             }
         },
         created()
@@ -61,11 +61,16 @@
     }
 </script>
 <style scoped>
-    #sheet3D{
+    #sheet1{
+        display: block;
         position: absolute;
         bottom: 3%;
         right: 2%;
-        z-index: 1008;
+        z-index: 100000;
         /*display: none;*/
     }
 </style>
+<!--Collapse-->
+
+
+
