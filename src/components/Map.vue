@@ -99,10 +99,28 @@
                 precision: 10,
                 //may need to use a different property in order to fill polygons correctly
                 style: function (feature) {
-                    if (feature.properties.POPDENS_CY < 100)
-                        return {fillColor: "red"};//, fill_opacity: .99};//, weight: 2, opacity: 255
+                    if (feature.properties.POPDENS_CY >2792)
+                        return {fillColor: "#c20000", fillOpacity: 1, color:'black', weight:1};
+                    else if (feature.properties.POPDENS_CY >699)
+                        return {fillColor: "#f33506", fillOpacity: 1, color:'black', weight:1};
+                    else if (feature.properties.POPDENS_CY >189)
+                        return {fillColor: "#ff8843", fillOpacity: 1, color:'black', weight:1};
+                    else if (feature.properties.POPDENS_CY >90)
+                        return {fillColor: "#ffcd7d", fillOpacity: 1, color:'black', weight:1};
+                    else
+                        return {fillColor: "#fff1d6", fillOpacity: 1, color:'black', weight:1};
+
+                    // if (feature.properties.POPDENS_CY >500)
+                    //     return {fillColor: "#c20000", fillOpacity: 1};
+                    //
+                    // else
+                    //     return {fillColor: "#fff1d6", fillOpacity: 1};
+
                 }
             }).addTo(movesMap);
+
+            movesMap.removeLayer(popDenseLayer);
+
 
             //unable to fill polygons
             esriSnowLayer = esri.featureLayer({
@@ -112,20 +130,20 @@
                 //may need to use a different property in order to fill polygons correctly
                 style: function (feature) {
                     if(feature.properties.Snow_map === 'earlier by over 3 weeks')
-                        return {fillColor: "#003F8C", fillOpacity: '1.0'};//, fill_opacity: .99};//, weight: 2, opacity: 255
+                        return {fillColor: "#003F8C", fillOpacity: '1.0', color:'black', weight:1};//, fill_opacity: .99};//, weight: 2, opacity: 255
                     else if (feature.properties.Snow_map === 'earlier by 2 to 3 weeks')
-                        return {fillColor: '#4585C4', fillOpacity: '1.0'};
+                        return {fillColor: '#4585C4', fillOpacity: '1.0', color:'black', weight:1};
 
                     else if(feature.properties.Snow_map === 'earlier by 1 to 2 weeks')
-                        return {fillColor: '#7DB5FA', fillOpacity: '1.0'};
+                        return {fillColor: '#7DB5FA', fillOpacity: '1.0', color:'black', weight:1};
                     else if(feature.properties.Snow_map === 'less than a week')
-                        return {fillColor: '#BED2FF', fillOpacity: '1.0'};
+                        return {fillColor: '#BED2FF', fillOpacity: '1.0', color:'black', weight:1};
                     else if(feature.properties.Snow_map === 'later by over a week')
-                        return {fillColor: '#BED2FF', fillOpacity: '1.0'};
+                        return {fillColor: '#BED2FF', fillOpacity: '1.0', color:'black', weight:1};
                     else if(feature.properties.Snow_map === 'other')
-                        return {fillColor: '#AAAAAA', fillOpacity: '1.0'};
+                        return {fillColor: '#AAAAAA', fillOpacity: '1.0', color:'black', weight:1};
                     else
-                        return {fillColor: '#E1E1E1'};
+                        return {fillColor: '#E1E1E1', fillOpacity: '1.0', color:'black', weight:1};
 
 
                 }
@@ -133,6 +151,7 @@
             }).addTo(movesMap);
 
             movesMap.removeLayer(esriSnowLayer);
+
             //document.getElementById("esriSnowLayer").visibilty = "hidden";
 
             /*            geoJsonQPF_Day1 = L.geoJson(qpfDay1,
@@ -247,10 +266,20 @@
         if(layerName=="esriSnowLayer"){
             return esriSnowLayer;
         }
+        else if(layerName=="popDenseLayer"){
+            return popDenseLayer;
+        }
+        else if(layerName=="rainGuagesLayer"){
+            return null;
+        }
+        else if(layerName=="precipitationLayer"){
+            return null;
+        }
         else{
             return null;
         }
     }
+
 
     function resetMap(){
         movesMap.setView([38.3117, -98.77774], 5);

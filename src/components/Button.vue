@@ -1,5 +1,5 @@
 <template>
-    <v-btn id="button" class="mx-2" fab dark color="indigo" @click="onClick">
+    <v-btn id="button" class="mx-2" fab dark color="indigo" @click="openScene">
         <v-icon dark>add</v-icon>
     </v-btn>
 </template>
@@ -8,6 +8,9 @@
     export default {
         name: "Button",
         methods: {
+            openScene: function() {
+                this.$eventHub.$emit('openScene');
+            },
             onClick: function() {
                 console.log("started onClick() function");
                 // the three latter numbers are the x,y,z coordinates, respectively

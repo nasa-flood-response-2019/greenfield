@@ -40,7 +40,7 @@
             z0: Number
         },
         mounted() {
-            this.$eventHub.$on("init", this.initMap);
+            // this.$eventHub.$on("init", this.initMap);
         },
         methods: {
             initMap() {

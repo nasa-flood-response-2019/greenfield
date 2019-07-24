@@ -187,9 +187,9 @@
                 layers: [
                     //made navigation drawer a little wider so that the snowmelt layer is completely shown
                     ['Change in Snowmelt Timing\n(1975-2040)', 'layers', false, 'esriSnowLayer'],
-                    ['Population Density', 'layers', false],
-                    ['Rain Gauges', 'layers', false],
-                    ['Precipitation Change by 2050', 'layers', false]
+                    ['Population Density', 'layers', false, 'popDenseLayer'],
+                    ['Rain Gauges', 'layers', false, 'rainGuagesLayer'],
+                    ['Precipitation Change by 2050', 'layers', false, 'precipitationLayer']
                 ],
                 bookmarks: [
                     ['United States', 'bookmark'],
