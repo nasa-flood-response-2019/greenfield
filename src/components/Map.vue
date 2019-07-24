@@ -19,6 +19,7 @@
     let maskingSentinelApr16;
     let esriSnowLayer;
     let popDenseLayer;
+    let precipitationLayer;
 
     export default {
         name: "Map",
@@ -139,7 +140,7 @@
                     else if(feature.properties.Snow_map === 'less than a week')
                         return {fillColor: '#BED2FF', fillOpacity: '1.0', color:'black', weight:1};
                     else if(feature.properties.Snow_map === 'later by over a week')
-                        return {fillColor: '#BED2FF', fillOpacity: '1.0', color:'black', weight:1};
+                        return {fillColor: '#f1b5ff', fillOpacity: '1.0', color:'black', weight:1};
                     else if(feature.properties.Snow_map === 'other')
                         return {fillColor: '#AAAAAA', fillOpacity: '1.0', color:'black', weight:1};
                     else
@@ -152,6 +153,42 @@
 
             movesMap.removeLayer(esriSnowLayer);
 
+
+            precipitationLayer = esri.featureLayer({
+                url: 'https://cumulus.tnc.org/arcgis/rest/services/Atlas/TerrestrialMaps/MapServer/22',
+                simplifyFactor: .5,
+                precision: 10,
+                //may need to use a different property in order to fill polygons correctly
+                style: function (feature) {
+                    if(feature.properties.precip2050 >23.2)
+                        return {fillColor: "#0090cd", fillOpacity: '1.0', color:'black', weight:1};
+                    else if(feature.properties.precip2050 >15.7)
+                        return {fillColor: "#4ca4b8", fillOpacity: '1.0', color:'black', weight:1};
+                    else if(feature.properties.precip2050 >10.3)
+                        return {fillColor: "#80bba4", fillOpacity: '1.0', color:'black', weight:1};
+                    else if(feature.properties.precip2050 >6.2)
+                        return {fillColor: "#a9d18b", fillOpacity: '1.0', color:'black', weight:1};
+                    else if(feature.properties.precip2050 >3.2)
+                        return {fillColor: "#d2e96e", fillOpacity: '1.0', color:'black', weight:1};
+                    else if(feature.properties.precip2050 >0.1)
+                        return {fillColor: "#e6f6af", fillOpacity: '1.0', color:'black', weight:1};
+                    else if(feature.properties.precip2050 >-2.2)
+                        return {fillColor: "#ffd224", fillOpacity: '1.0', color:'black', weight:1};
+                    else if(feature.properties.precip2050 >-6.5)
+                        return {fillColor: "#ffa300", fillOpacity: '1.0', color:'black', weight:1};
+                    else if(feature.properties.precip2050 >-9.2)
+                        return {fillColor: "#ff7300", fillOpacity: '1.0', color:'black', weight:1};
+                    else if(feature.properties.precip2050 >-12.4)
+                        return {fillColor: "#ff3700", fillOpacity: '1.0', color:'black', weight:1};
+                    else
+                        return {fillColor: '#fa0000', fillOpacity: '1.0', color:'black', weight:1};
+
+
+                }
+
+            }).addTo(movesMap);
+
+            movesMap.removeLayer(precipitationLayer);
             //document.getElementById("esriSnowLayer").visibilty = "hidden";
 
             /*            geoJsonQPF_Day1 = L.geoJson(qpfDay1,
@@ -273,7 +310,9 @@
             return null;
         }
         else if(layerName=="precipitationLayer"){
-            return null;
+            console.log("precip layer checked?");
+            return precipitationLayer;
+
         }
         else{
             return null;
