@@ -2,8 +2,8 @@
     <!--    <v-flex>-->
     <v-sheet id="sheet1"
              color="grey lighten-3"
-             height="450"
-             width="450"
+             height="350"
+             width="350"
     >
         <p>Hello, this is for the 3Dscene</p>
     </v-sheet>

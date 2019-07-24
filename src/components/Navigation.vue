@@ -112,11 +112,12 @@
                     <v-list-tile
                             v-for="(eachLayer, i) in layers"
                             :key="i"
-
-                    >
+                            >
                         <v-list-tile-action
                                 @click="emitToggleLayer(eachLayer)"
-                                v-on:click= "eachLayer[2] = !eachLayer[2]">
+                                v-on:click= "eachLayer[2] = !eachLayer[2]"
+
+                        >
                             <v-checkbox></v-checkbox>
                         </v-list-tile-action>
                         <v-list-tile-content>
@@ -187,7 +188,7 @@
                 ],
                 layers: [
                     //made navigation drawer a little wider so that the snowmelt layer is completely shown
-                    ['Change in Snowmelt Timing\n(1975-2040)', 'layers', false, 'esriSnowLayer'],
+                    ['Change in Snowmelt Timing (1975-2040)', 'layers', false, 'esriSnowLayer'],
                     ['Population Density', 'layers', false, 'popDenseLayer'],
                     ['Rain Gauges', 'layers', false, 'rainGuagesLayer'],
                     ['Precipitation Change by 2050', 'layers', false, 'precipitationLayer']
@@ -248,4 +249,7 @@
         top: 75px;
         left: 0px;
     }
+    /*#layersTaller{*/
+    /*    height: 1000px;*/
+    /*}*/
 </style>
