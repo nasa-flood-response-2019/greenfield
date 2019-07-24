@@ -4,7 +4,7 @@
         <v-content>
         <v-container fluid fill-height style="margin:0">
             <Navigation/>
-            <Button></Button>
+<!--            <Button></Button>-->
             <Header/>
             <About style="display: none"/>
             <Scene style="display: none"/>
