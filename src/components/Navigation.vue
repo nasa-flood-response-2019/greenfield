@@ -112,10 +112,11 @@
                     <v-list-tile
                             v-for="(eachLayer, i) in layers"
                             :key="i"
-                            @click="emitToggleLayer(eachLayer)"
-                            v-on:click= "eachLayer[2] = !eachLayer[2]"
+
                     >
-                        <v-list-tile-action>
+                        <v-list-tile-action
+                                @click="emitToggleLayer(eachLayer)"
+                                v-on:click= "eachLayer[2] = !eachLayer[2]">
                             <v-checkbox></v-checkbox>
                         </v-list-tile-action>
                         <v-list-tile-content>
