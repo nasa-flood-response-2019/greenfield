@@ -1,6 +1,6 @@
 <template>
 
-        <v-sheet id="sheet"
+        <v-sheet id="aboutSheet"
                  color="light-blue lighten-4"
                  height="600"
                  width="1200"
@@ -61,7 +61,7 @@
                         //console.log('about working');
                         //toggle visibility for 3Dscene
                         //not working lol
-                        let about = document.getElementById("sheet");
+                        let about = document.getElementById("aboutSheet");
                         if (about.style.display === "none") {
                             about.style.display = "block";
                         } else {
@@ -74,7 +74,7 @@
 </script>
 
 <style scoped>
-    #sheet{
+    #aboutSheet{
         position: absolute;
         bottom: 11%;
         right: 5%;

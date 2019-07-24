@@ -1,6 +1,6 @@
 <template>
     <!--    <v-flex>-->
-    <v-sheet id="sheet1"
+    <v-sheet id="sheet3D"
              color="grey lighten-3"
              height="350"
              width="350"
@@ -42,7 +42,7 @@
         },
         methods:{
             sceneOpen1(){
-                let scene = document.getElementById("sheet1");
+                let scene = document.getElementById("sheet3D");
                 if (scene.style.display === "none") {
                     scene.style.display = "block";
                 } else {
@@ -61,7 +61,7 @@
     }
 </script>
 <style scoped>
-    #sheet1{
+    #sheet3D{
         position: absolute;
         bottom: 3%;
         right: 2%;

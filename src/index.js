@@ -4,6 +4,7 @@ import store from './store'
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css'
 import App from './App.vue';
+
 // import EventHub from 'vue-event-hub';
 
 let geoJsonCurrentGauges;
