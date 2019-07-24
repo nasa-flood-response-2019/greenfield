@@ -5,21 +5,21 @@
     import L from "leaflet";
     import * as esri from "esri-leaflet";
     import * as wmts from "leaflet-tilelayer-wmts";
-    //import axios from 'axios';
-    //import * as MakiMarkers from './scripts/Leaflet.MakiMarkers';
+    import axios from 'axios';
+    import * as MakiMarkers from './scripts/Leaflet.MakiMarkers';
     import './scripts/utility';
     let movesMap;
     let esriAerialsLayer;
     let esriAerialsLabels;
     let esriToposLayer;
     let esriStreetsLayer;
+    let gaugeLayer;
     let googleImageryLayer;
-    //let geoJsonQPF_Day1;
-    //let geoJsonQPF_Day2;
     let maskingSentinelApr16;
     let esriSnowLayer;
     let popDenseLayer;
     let precipitationLayer;
+
 
     export default {
         name: "Map",
@@ -37,7 +37,7 @@
         },
         methods:{
             //initializeMap: initializeMap()
-            toggleLayer: toggleLayer,
+            toggleLayer,
             //addRemoveMaskTornado:addRemoveMaskTornado,
             resetMap,
             redrawMap,
@@ -122,6 +122,146 @@
 
             movesMap.removeLayer(popDenseLayer);
 
+            window.onload = function() {
+                L.Icon.Default.imagePath = 'undefined';
+                let hmap = new hashmap();
+                (async () => {
+                    const response = await axios.get('http://129.116.70.166/ida_gauges/api/ahps/gauges/');
+                    var geojs = response.data.features;
+                    var lyr = L.geoJSON();//.addTo(movesMap);
+                    for(var i = 0; i<geojs.length; ++i) {
+                        lyr.addData(geojs[i]);
+                        let mkr = L.marker([geojs[i].geometry.coordinates[1],
+                            geojs[i].geometry.coordinates[0]]);
+                        hmap.add(geojs[i]);
+                        mkr.addTo(lyr);
+                        let stat = geojs[i].properties.status;
+                        manage(mkr, stat);
+                        mkr.on('click', function(e) {
+                            let geo_obj = hmap.get(e.latlng.lat,e.latlng.lng);
+                            mkr.bindPopup(gen_vue_comp(geo_obj));
+                        });
+                    };
+
+                    gaugeLayer = lyr;
+                })()
+            }
+
+            class hashmap{
+                constructor() {
+                    this.array = [];
+                    for(var i = 0; i<100; i++)
+                        this.array.push(new linkedlist());
+                }
+                // easier version of ieee 754
+                conv(num) {
+                    let aux = num;
+                    let hash = 0;
+                    let lim = Math.floor(Math.log(num)/Math.LN2);
+                    for(var i = lim; i>lim-30; i--) {
+                        let val = Math.pow(2,i);
+                        hash << 1;
+                        hash += (aux >= val) ? 1 : 0;
+                        if(aux >= val) {
+                            aux -= val;
+                        }
+                    }
+                    return hash;
+                }
+
+                hash(lat,lng) {
+                    return this.conv(Math.abs(lat))*this.conv(Math.abs(lng))%100;
+                }
+
+                add(geojs) {
+                    let lat = geojs.properties.lat_node;
+                    let lng = geojs.properties.lng_node;
+                    this.array[this.hash(lat,lng)].add(geojs);
+                }
+
+                get(lat,lng) {
+                    let list = this.array[this.hash(lat,lng)];
+                    let pt = list.root;
+                    let ctr = 0;
+                    while(typeof pt.geojs !== 'undefined') {
+                        if(pt.geojs.properties.lat_node === lat && pt.geojs.properties.lng_node === lng) {
+                            return pt.geojs;
+                        }
+                        pt = pt.ptr;
+                    }
+                    return null;
+                }
+            }
+
+            function manage(mkr, stat) {
+                let st = '';
+                switch(stat) {
+                    case 'minor': st='yellow'; break;
+                    case 'moderate': st='red'; break;
+                    case 'major': st='purple'; break;
+                }
+                let uri = `picture_${st}.png`;
+                let icon = L.icon({
+                    iconUrl: uri,
+                    shadowUrl: uri,
+                    iconSize:     [30, 30],
+                    shadowSize:   [0, 0],
+                    popupAnchor:  [0, -30]
+                });
+                mkr.setIcon(icon);
+            }
+
+            function gen_string(geo_jsn) {
+                return `<p>${geo_jsn.properties.location}, ${geo_jsn.properties.state}</p>
+						     <p>Reading: ${geo_jsn.properties.observed}</p>
+						     <p>Location: ${geo_jsn.properties.location}</p>
+							 <p>Time: ${geo_jsn.properties.obstime}</p>
+							 <p>Status: ${geo_jsn.properties.status}</p>`;
+            }
+
+            function gen_vue_comp(geo_jsn) {
+                var v = new Vue({
+                    data(){
+                        return {
+                            message: gen_string(geo_jsn)
+                        }
+                    }
+                });
+                return v.message;
+            }
+
+            class linkedlist {
+                constructor(){
+                    this.root = new node(undefined,undefined);
+                    this.ptr = this.root;
+                    this.size = 0;
+                }
+
+                add(geo_inf){
+                    this.ptr.geojs = geo_inf;
+                    this.ptr.ptr = new node(undefined,undefined);
+                    this.ptr = this.ptr.ptr;
+                    this.size++;
+                }
+            }
+
+            class node {
+                constructor(n,geojs) {
+                    this.ptr = n;
+                    this.geojs = geojs;
+                }
+            }
+
+            class pop_data {
+                constructor(loc,state,obv,water,time,stat) {
+                    this.loc = loc;
+                    this.state = state;
+                    this.obv = obv;
+                    this.water = water;
+                    this.time = time;
+                    this.stat = stat;
+                }
+            }
 
             //unable to fill polygons
             esriSnowLayer = esri.featureLayer({
@@ -140,7 +280,7 @@
                     else if(feature.properties.Snow_map === 'less than a week')
                         return {fillColor: '#BED2FF', fillOpacity: '1.0', color:'black', weight:1};
                     else if(feature.properties.Snow_map === 'later by over a week')
-                        return {fillColor: '#f1b5ff', fillOpacity: '1.0', color:'black', weight:1};
+                        return {fillColor: '#BED2FF', fillOpacity: '1.0', color:'black', weight:1};
                     else if(feature.properties.Snow_map === 'other')
                         return {fillColor: '#AAAAAA', fillOpacity: '1.0', color:'black', weight:1};
                     else
@@ -189,6 +329,7 @@
             }).addTo(movesMap);
 
             movesMap.removeLayer(precipitationLayer);
+
             //document.getElementById("esriSnowLayer").visibilty = "hidden";
 
             /*            geoJsonQPF_Day1 = L.geoJson(qpfDay1,
@@ -282,7 +423,7 @@
             this.$eventHub.$on('redrawMap',this.redrawMap);
             //toggleMaskTornado20190416
             //this.$eventHub.$on('toggleMaskTornado20190416', this.addRemoveMaskTornado);
-            this.$eventHub.$on('toggleLayer', this.changeLayer); //add function to call
+            this.$eventHub.$on('togglemLayer', this.changeLayer); //add function to call
             // this.$eventHub.$on('layerOff', this.layerOff); // add function to call
         }
     }
@@ -293,32 +434,30 @@
         }
         else{
             movesMap.addLayer(getLayer(layer[3]));
+            console.log("layer added");
         }
 
         //document.getElementById(layer).visibility = "visible";
         //not working
     }
     function getLayer(layerName){
-        console.log("layaerArr function started");
+        console.log("layer name get function started");
         if(layerName=="esriSnowLayer"){
             return esriSnowLayer;
         }
         else if(layerName=="popDenseLayer"){
             return popDenseLayer;
         }
-        else if(layerName=="rainGuagesLayer"){
-            return null;
+        else if(layerName=="rainGaugesLayer"){
+            return gaugeLayer;
         }
         else if(layerName=="precipitationLayer"){
-            console.log("precip layer checked?");
             return precipitationLayer;
-
         }
         else{
             return null;
         }
     }
-
 
     function resetMap(){
         movesMap.setView([38.3117, -98.77774], 5);
@@ -395,6 +534,20 @@
                 movesMap.addLayer(esriAerialsLabels);
                 checkRemoveTopo();
                 checkRemoveStreets();
+            }
+        } else if (incomingLayer === 'streets') {
+            if (movesMap.hasLayer(esriStreetsLayer)) {
+                if (!movesMap.hasLayer(esriToposLayer)) {
+                    movesMap.addLayer(esriToposLayer);
+                }
+                checkRemoveStreets();
+                checkRemoveGoogleWMTS();
+                checkRemoveAerials();
+            } else {
+                movesMap.addLayer(esriStreetsLayer);
+                checkRemoveGoogleWMTS();
+                checkRemoveTopo();
+                checkRemoveAerials();
             }
         } else if (incomingLayer === 'streets') {
             if (movesMap.hasLayer(esriStreetsLayer)) {

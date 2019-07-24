@@ -190,7 +190,7 @@
                     //made navigation drawer a little wider so that the snowmelt layer is completely shown
                     ['Change in Snowmelt Timing (1975-2040)', 'layers', false, 'esriSnowLayer'],
                     ['Population Density', 'layers', false, 'popDenseLayer'],
-                    ['Rain Gauges', 'layers', false, 'rainGuagesLayer'],
+                    ['Rain Gauges', 'layers', false, 'rainGaugesLayer'],
                     ['Precipitation Change by 2050', 'layers', false, 'precipitationLayer']
                 ],
                 bookmarks: [
@@ -220,7 +220,7 @@
                 // }
                 // else
                 //     this.$eventHub.$emit('layerOff', layer);
-                this.$eventHub.$emit('toggleLayer', layer);
+                this.$eventHub.$emit('togglemLayer', layer);
                 console.log("layer on emitted");
             },
             openAbout: function(){
