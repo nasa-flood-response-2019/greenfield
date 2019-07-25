@@ -79,21 +79,22 @@
                             }
                         });
                         console.log("started Sceneview");
+                        console.log("dskfjadskfds" + this.x0);
                         var view = new SceneView({
                             map: scene,
                             container: "viewDiv",
-                          //  camera: {
-                            //    position: {
-                              //      x: this.x0,
-                                //    y: this.y0,
-                                  //  z: 10654,
-                                   // spatialReference: {
-                                     //   wkid: 3857
-                                   // }
-                               // },
-                               // heading: 85,
-                               // tilt: 65
-                           // }
+                           camera: {
+                               position: {
+                                   x: -119.622075,
+                                   y: 37.720650,
+                                   z: 2104.901239,
+                                   spatialReference: {
+                                       wkid: 3857
+                                   }
+                               },
+                               heading: 85,
+                               tilt: 65
+                           }
                         });
                         console.log("built Sceneview");
                     }).catch(e => {
