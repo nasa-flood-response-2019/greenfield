@@ -6,14 +6,14 @@
                  height="350"
                  width="350"
         >
-            <h3>Layer Opacity</h3>
-            <!--        <v-container>-->
-            <v-slider id="slider"
-                      @change='onChange($event)'
-                      v-model="volume"
-                      label='Snowmelt Timing'>
-            </v-slider>
-            <!--        </v-container>-->
+            <h1>3D scene</h1>
+<!--                    <v-container>-->
+<!--            <v-slider id="slider"-->
+<!--                      @change='onChange($event)'-->
+<!--                      v-model="volume"-->
+<!--                      label='Snowmelt Timing'>-->
+<!--            </v-slider>-->
+<!--                    </v-container>-->
         </v-sheet>
     </v-container>
     <!--        </v-flex>-->
@@ -70,7 +70,3 @@
         /*display: none;*/
     }
 </style>
-<!--Collapse-->
-
-
-
