@@ -4,12 +4,11 @@
         <v-content>
         <v-container fluid fill-height style="margin:0">
             <Navigation/>
-<!--            <Button></Button>-->
+            <Button></Button>
             <Sheets/>
             <Header/>
             <About style="display: none"/>
-            <Scene style="display: none"/>
-<!--            <Scene :x0="x0" :y0="y0" :z0="z0" id="dialogBox" style="display: none"/>-->
+            <Scene id="dialogBox" style="display: none"/>
             <Map/>
         </v-container>
         </v-content>
@@ -42,7 +41,7 @@
             Sheets
             },
         mounted() {
-            // this.$eventHub.$on('openBox', this.makeAppear);
+            this.$eventHub.$on('openBox', this.makeAppear);
         },
         methods: {
             makeAppear() {
@@ -77,6 +76,11 @@
     }
 </script>
 
-<style scoped>
-
+<style>
+#dialogBox {
+    position: absolute;
+    bottom: 3%;
+    right: 2%;
+    z-index: 2000;
+}
 </style>
