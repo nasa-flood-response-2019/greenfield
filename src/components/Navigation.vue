@@ -48,7 +48,6 @@
                     <v-list-tile
                             v-for="(bookmarks, i) in bookmarks"
                             :key="i"
-                            @click= ""
                             v-on:click="emitBookMark(bookmarks[0])"
                     >
                         <!--                        trying to toggle between bookmarks-->
@@ -80,7 +79,6 @@
                     <v-list-tile
                             v-for="(basemap1, i) in basemap1"
                             :key="i"
-                            @click= ""
                             v-on:click="emitLayer(basemap1[2])"
                     >
                         <!--                        trying to toggle between basemaps-->
