@@ -14,7 +14,7 @@
                 <v-btn fab dark color="teal darken-1" @click="openPercip">
                         <v-icon>fa-cloud-showers-heavy</v-icon>
                 </v-btn>
-                <v-btn fab dark color="blue-grey darken-1" @click="openScene">
+                <v-btn fab color="primary" @click="openScene">
                         <v-icon>3d_rotation</v-icon>
                 </v-btn>
         </v-toolbar>
