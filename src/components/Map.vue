@@ -47,8 +47,12 @@
             changeLayer,
             changeOpacity,
             passData() {
-                this.$eventHub.$emit("latlng", movesMap.getBounds());
-            }
+                this.$eventHub.$emit("latlng", movesMap.getCenter());
+                // movesMap.on('moveend', this.onMapClick)
+            },
+            // onMapClick(e) {
+            //     this.$eventHub.$emit("latlng", e.target._lastCenter);
+            // }
         },
         mounted(){
             //console.log(this.$store.state.count);

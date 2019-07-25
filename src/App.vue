@@ -46,7 +46,7 @@
         methods: {
             makeAppear() {
                 console.log("started makeAppear()");
-                this.$eventHub.$emit('init', this.x0, this.y0, this.z0);
+                this.$eventHub.$emit('init');
                 let x = document.getElementById("dialogBox");
                 if (x.style.display === "none") {
                     console.log("x.style.display = none");

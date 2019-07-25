@@ -14,8 +14,8 @@
     import { loadModules } from 'esri-loader';
     import L from 'leaflet';
 
-    let x0;
-    let y0;
+    let noX;
+    let noY;
     let z0;
 
     export default {
@@ -56,18 +56,14 @@
         methods:{
             test(test) {
                 console.log(test);
-                this.x0 = test._northEast.lat;
-                this.y0 = test._northEast.lng;
-                console.log(`${test._northEast.lat} ${test._northEast.lng}`);
+                this.noX = Number(test.lat);
+                this.noY = Number(test.lng);
+                console.log(this.noX + " " + this.noY);
             },
-            // sceneOpen1(){
-            //     document.getElementById("sheet1").style.zIndex = '100000';
-            //     this.sheetToggleFlg = !this.sheetToggleFlg;
-            // },
             onChange: function(event) {
                 console.log(event);
             },
-            initMap(x0, y0, z0) {
+            initMap() {
                 this.testFlg = !this.testFlg;
                 console.log(this.testFlg);
                 loadModules(['esri/views/SceneView', 'esri/config', 'esri/WebScene', 'esri/Camera'])
@@ -79,21 +75,22 @@
                             }
                         });
                         console.log("started Sceneview");
-                        console.log("dskfjadskfds" + this.x0);
+                        console.log("Latitude: " + this.noX);
                         var view = new SceneView({
                             map: scene,
                             container: "viewDiv",
-                           camera: {
+                            camera: {
                                position: {
-                                   x: -119.622075,
-                                   y: 37.720650,
-                                   z: 2104.901239,
-                                   spatialReference: {
-                                       wkid: 3857
+                                   x: this.noX,
+                                   y: this.noY,
+                                   z: 2000,
+                                   spatialreference: {
+                                       wkid: 102100,
+                                       latestWkid: 3857
                                    }
                                },
-                               heading: 85,
-                               tilt: 65
+                               tilt: 84,
+                               heading: 85
                            }
                         });
                         console.log("built Sceneview");

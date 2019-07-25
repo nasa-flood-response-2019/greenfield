@@ -8,9 +8,6 @@
     export default {
         name: "Button",
         methods: {
-            // onClick: function() {
-            //     this.$eventHub.$emit('openScene');
-            // },
             onClick: function() {
                 console.log("started onClick() function");
                 // the three latter numbers are the x,y,z coordinates, respectively
