@@ -1,5 +1,5 @@
 <template>
-    <div id="mapTexas"></div>
+    <div id="mapTexas" v-on:click="passData()"></div>
 </template>
 <script>
     import L from "leaflet";
@@ -45,7 +45,10 @@
             goToLocation,
             getMapInfo,
             changeLayer,
-            changeOpacity
+            changeOpacity,
+            passData() {
+                this.$eventHub.$emit("latlng", movesMap.getBounds());
+            }
         },
         mounted(){
             //console.log(this.$store.state.count);
