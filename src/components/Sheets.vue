@@ -7,11 +7,11 @@
     >
         <v-slider id="slider"
                   class="sliderRight"
-                  @change='onChange($event)'
+                  @change='onSnow($event)'
                   v-model="opacity"
                   label='Snowmelt Timing'>
         </v-slider>
-        <img src='rainGaugeLegend.png' width="175" height="175">
+        <img src='snowmeltLegend.png' width="225" height="190">
     </v-sheet>
         </v-container>
 
@@ -22,10 +22,11 @@
     >
         <v-slider id="slider"
                   class="sliderRight"
-                  @change='onChange($event)'
-                  v-model="opacity"
+                  @change='onPop($event)'
+                  v-model="opacity1"
                   label='Population Density'>
         </v-slider>
+        <img src='popDenseLegend.png' width="213" height="175">
     </v-sheet>
         </v-container>
         <v-container style="display: none" id="sheet3">
@@ -33,12 +34,13 @@
              height="250"
              width="425"
     >
-        <v-slider id="slider"
-                  class="sliderRight"
-                  @change='onChange($event)'
-                  v-model="opacity"
-                  label='Rain Gauge'>
-        </v-slider>
+        <img src='rainGaugeLegend.png' width="200" height="200">
+<!--        <v-slider id="slider"-->
+<!--                  class="sliderRight"-->
+<!--                  @change='onRain($event)'-->
+<!--                  v-model="opacity"-->
+<!--                  label='Rain Gauge'>-->
+<!--        </v-slider>-->
     </v-sheet>
         </v-container>
         <v-container style="display: none" id="sheet4">
@@ -48,10 +50,11 @@
     >
         <v-slider id="slider"
                   class="sliderRight"
-                  @change='onChange($event)'
-                  v-model="opacity"
+                  @change='onPrecip($event)'
+                  v-model="opacity2"
                   label="Precipitaion Change">
         </v-slider>
+        <img src='precipitationLegend.png' width="216" height="180">
     </v-sheet>
         </v-container>
     </div>
@@ -64,6 +67,8 @@
         data () {
             return {
                 opacity: 100,
+                opacity1: 100,
+                opacity2: 100
             }
         },
         methods:
@@ -85,16 +90,25 @@
                     }
 
                 },
-                onChange: function(event) {
-                    console.log(event);
-                    //console.log(document.querySelector("#sheet1").style.display);
+                onSnow: function(event) {
+                    this.$eventHub.$emit('opacitySnow', event, 'esriSnowLayer');
+                    console.log("opacitySnow emitted");
+                },
+                onPop: function(event) {
+                    this.$eventHub.$emit('opacityPop', event, 'popDenseLayer');
+                },
+                onRain: function(event) {
+                    this.$eventHub.$emit('opacityRain', event, 'gaugeLayer');
+                },
+                onPrecip: function(event) {
+                    this.$eventHub.$emit('opacityPrecip', event, 'precipitationLayer');
                 }
             },
         created() {
             this.$eventHub.$on('openSnow', this.oneSheet);
             this.$eventHub.$on('openRain', this.oneSheet);
             this.$eventHub.$on('openPop', this.oneSheet);
-            this.$eventHub.$on('openPercip', this.oneSheet);
+            this.$eventHub.$on('openPrecip', this.oneSheet);
         }
     }
 </script>

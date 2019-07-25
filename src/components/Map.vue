@@ -44,7 +44,8 @@
             goToBookmark,
             goToLocation,
             getMapInfo,
-            changeLayer
+            changeLayer,
+            changeOpacity
         },
         mounted(){
             //console.log(this.$store.state.count);
@@ -425,21 +426,39 @@
             //this.$eventHub.$on('toggleMaskTornado20190416', this.addRemoveMaskTornado);
             this.$eventHub.$on('togglemLayer', this.changeLayer); //add function to call
             // this.$eventHub.$on('layerOff', this.layerOff); // add function to call
+            this.$eventHub.$on('opacitySnow', this.changeOpacity);
+            this.$eventHub.$on('opacityRain', this.changeOpacity);
+            this.$eventHub.$on('opacityPop', this.changeOpacity);
+            this.$eventHub.$on('opacityPrecip', this.changeOpacity);
         }
     }
+    //
+    function changeOpacity(opacity, layer){
+        let newFill = opacity/100;
+        if(layer==="esriSnowLayer"){
+            esriSnowLayer.setStyle({fillOpacity:newFill, opacity:newFill});
+        } else if(layer==="precipitationLayer"){
+            precipitationLayer.setStyle({fillOpacity:newFill, opacity:newFill});
+        } else if(layer==="popDenseLayer") {
+            popDenseLayer.setStyle({fillOpacity: newFill, opacity: newFill});
+        }
+        //  else {
+        //     gaugeLayer.setStyle({fillOpacity:newFill, opacity:newFill});
+        // }
+    }
+
     function changeLayer(layer) {
-        console.log("message recieved and layer on function started");
         if(layer[2]){
             movesMap.removeLayer(getLayer(layer[3]));
         }
         else{
             movesMap.addLayer(getLayer(layer[3]));
-            console.log("layer added");
         }
+    }
 
         //document.getElementById(layer).visibility = "visible";
         //not working
-    }
+
     function getLayer(layerName){
         console.log("layer name get function started");
         if(layerName=="esriSnowLayer"){
@@ -631,6 +650,8 @@
         checkRemoveLabelsOnly();
 
     }
+
+
 
 </script>
 <style>

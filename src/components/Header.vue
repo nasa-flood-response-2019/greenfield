@@ -38,7 +38,7 @@
                             this.$eventHub.$emit('openRain', 'sheet3');
                     },
                     openPercip: function () {
-                            this.$eventHub.$emit('openPercip', 'sheet4');
+                            this.$eventHub.$emit('openPrecip', 'sheet4');
                     }
             }
     }
