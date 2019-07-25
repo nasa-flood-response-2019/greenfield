@@ -86,13 +86,13 @@
                                    z: 2000,
                                    spatialreference: {
                                        wkid: 102100,
-                                       latestWkid: 3857
                                    }
                                },
                                tilt: 84,
                                heading: 85
                            }
                         });
+                        console.log(this.noX);
                         console.log("built Sceneview");
                     }).catch(e => {
                     console.log(e);
