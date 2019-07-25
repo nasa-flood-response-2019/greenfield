@@ -152,11 +152,24 @@
                         <v-list-tile-title>{{items[3].title}}</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
+                <v-list-tile>
+                    <v-list-tile-avatar>
+                        <v-icon>{{items[4].icon}}</v-icon>
+                    </v-list-tile-avatar>
+                    <v-list-tile-content>
+                        <v-btn id='search_btn' @click="search()">Search</v-btn>
+                    </v-list-tile-content>
+                    <v-list-tile-content>
+                        <v-text-field placeholder='Address (with state)' v-model="query"></v-text-field>
+                    </v-list-tile-content>
+                </v-list-tile>
             </v-list>
         </v-toolbar>
     </v-navigation-drawer>
 </template>
 <script>
+    const GAUGE_LAYER = 2;
+
     //import Header from './components/Header.vue';
     //import scene from 'components/scene.vue';
     export default {
@@ -168,6 +181,7 @@
         data() {
             return {
                 drawer: true,
+                query: '',
                 items: [
                     {title: 'Bookmarks', icon: 'bookmark'},
                     {title: 'Basemaps', icon: 'map'},
@@ -176,7 +190,8 @@
                     //have sliders pop up on screen when new data layer added
                     // { title: 'Opacity', icon: 'opacity' },
                     // {title: '3D Scene', icon: '3d_rotation'},
-                    {title: 'About', icon: 'info'}
+                    {title: 'About', icon: 'info'},
+                    {title: 'Search', icon: 'search'}
                 ],
                 basemap1: [
                     ['Default', 'map', 'topo'],
@@ -220,20 +235,16 @@
                 // else
                 //     this.$eventHub.$emit('layerOff', layer);
                 this.$eventHub.$emit('togglemLayer', layer);
+                this.$eventHub.$emit('layer-on', layer[0] === 'Rain Gauges');
                 console.log("layer on emitted");
             },
             openAbout: function(){
                 this.$eventHub.$emit('openAbout');
-            }//,
-            // onClick: function(){
-            //     this.$eventHub.$emit('openScene');
-            //     console.log("started onClick() function");
-            //     // the three latter numbers are the x,y,z coordinates, respectively
-            //     this.$emit('clicked', '34568765', '-1222', '4565');
-            //     console.log("emitted clicked");
-            //     this.$eventHub.$emit('openBox');
-            //     console.log("emitted openBox");
-            // }
+            },
+            search: function () {
+                this.$eventHub.$emit('search_query', this.query);
+                this.query='';
+            }
         }//,
         // components:
         //     {

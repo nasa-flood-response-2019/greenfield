@@ -6,6 +6,7 @@
     import * as esri from "esri-leaflet";
     import * as wmts from "leaflet-tilelayer-wmts";
     import axios from 'axios';
+    import Vue from 'vue';
     import * as MakiMarkers from './scripts/Leaflet.MakiMarkers';
     import './scripts/utility';
     let movesMap;
@@ -19,7 +20,8 @@
     let esriSnowLayer;
     let popDenseLayer;
     let precipitationLayer;
-
+    let gauge_geojs;
+    let layer_2 = false;
 
     export default {
         name: "Map",
@@ -46,6 +48,8 @@
             getMapInfo,
             changeLayer,
             changeOpacity,
+            calc_opt,
+            calc_dist,
             passData() {
                 this.$eventHub.$emit("latlng", movesMap.getCenter());
                 // movesMap.on('moveend', this.onMapClick)
@@ -129,32 +133,47 @@
             }).addTo(movesMap);
 
             movesMap.removeLayer(popDenseLayer);
-
             window.onload = function() {
                 L.Icon.Default.imagePath = 'undefined';
-                let hmap = new hashmap();
+                let mkr_map = new hashmap();
+                const MAX_DIST = 4;
                 (async () => {
                     const response = await axios.get('http://129.116.70.166/ida_gauges/api/ahps/gauges/');
-                    var geojs = response.data.features;
-                    var lyr = L.geoJSON();//.addTo(movesMap);
-                    for(var i = 0; i<geojs.length; ++i) {
+                    let geojs = response.data.features;
+                    gauge_geojs=geojs;
+                    console.log(gauge_geojs);
+                    let lyr = L.geoJSON();//.addTo(movesMap);
+                    for(let i = 0; i<geojs.length; ++i) {
                         lyr.addData(geojs[i]);
                         let mkr = L.marker([geojs[i].geometry.coordinates[1],
                             geojs[i].geometry.coordinates[0]]);
-                        hmap.add(geojs[i]);
                         mkr.addTo(lyr);
+                        mkr_map.add(geojs[i].geometry.coordinates[1],geojs[i].geometry.coordinates[0],mkr);
                         let stat = geojs[i].properties.status;
                         manage(mkr, stat);
-                        mkr.on('click', function(e) {
-                            let geo_obj = hmap.get(e.latlng.lat,e.latlng.lng);
-                            mkr.bindPopup(gen_vue_comp(geo_obj));
-                        });
+                        gaugeLayer = lyr;
                     };
-
-                    gaugeLayer = lyr;
+                    movesMap.on('click', function(e) {
+                        console.log('outside click!');
+                        let opt = calc_opt(e.latlng.lat, e.latlng.lng, geojs);
+                        console.log(opt);
+                        if (calc_dist(e.latlng.lat, e.latlng.lng, opt) < MAX_DIST) {
+                            let mkr = mkr_map.get(opt.geometry.coordinates[1], opt.geometry.coordinates[0]);
+                            console.log(mkr);
+                            mkr.bindPopup(gen_vue_comp(opt)).openPopup();
+                        }
+                    });
+                    /*
+                    var poiLayers = L.layerGroup([googleImageryLayer,esriAerialsLayer,esriStreetsLayer,]);
+                    L.control.search({
+                        position:'top',
+                        layer: poiLayers,
+                        initial: false,
+                        zoom: 11,
+                        marker: false
+                    }).addTo(movesMap); */
                 })()
             }
-
             class hashmap{
                 constructor() {
                     this.array = [];
@@ -162,6 +181,7 @@
                         this.array.push(new linkedlist());
                 }
                 // easier version of ieee 754
+                // implement tolerance of 0.01 lat/lng in any direction (circular)
                 conv(num) {
                     let aux = num;
                     let hash = 0;
@@ -176,23 +196,18 @@
                     }
                     return hash;
                 }
-
                 hash(lat,lng) {
                     return this.conv(Math.abs(lat))*this.conv(Math.abs(lng))%100;
                 }
-
-                add(geojs) {
-                    let lat = geojs.properties.lat_node;
-                    let lng = geojs.properties.lng_node;
-                    this.array[this.hash(lat,lng)].add(geojs);
+                add(lat,lng,mkr) {
+                    this.array[this.hash(lat,lng)].add(mkr);
                 }
-
                 get(lat,lng) {
                     let list = this.array[this.hash(lat,lng)];
                     let pt = list.root;
                     let ctr = 0;
                     while(typeof pt.geojs !== 'undefined') {
-                        if(pt.geojs.properties.lat_node === lat && pt.geojs.properties.lng_node === lng) {
+                        if(pt.geojs._latlng.lat=== lat && pt.geojs._latlng.lng === lng) {
                             return pt.geojs;
                         }
                         pt = pt.ptr;
@@ -200,7 +215,6 @@
                     return null;
                 }
             }
-
             function manage(mkr, stat) {
                 let st = '';
                 switch(stat) {
@@ -212,13 +226,12 @@
                 let icon = L.icon({
                     iconUrl: uri,
                     shadowUrl: uri,
-                    iconSize:     [20, 20],
+                    iconSize:     [30, 30],
                     shadowSize:   [0, 0],
-                    popupAnchor:  [0, -30]
+                    popupAnchor:  [0, -15]
                 });
                 mkr.setIcon(icon);
             }
-
             function gen_string(geo_jsn) {
                 return `<p>${geo_jsn.properties.location}, ${geo_jsn.properties.state}</p>
 						     <p>Reading: ${geo_jsn.properties.observed}</p>
@@ -226,7 +239,6 @@
 							 <p>Time: ${geo_jsn.properties.obstime}</p>
 							 <p>Status: ${geo_jsn.properties.status}</p>`;
             }
-
             function gen_vue_comp(geo_jsn) {
                 var v = new Vue({
                     data(){
@@ -237,14 +249,12 @@
                 });
                 return v.message;
             }
-
             class linkedlist {
                 constructor(){
                     this.root = new node(undefined,undefined);
                     this.ptr = this.root;
                     this.size = 0;
                 }
-
                 add(geo_inf){
                     this.ptr.geojs = geo_inf;
                     this.ptr.ptr = new node(undefined,undefined);
@@ -252,14 +262,12 @@
                     this.size++;
                 }
             }
-
             class node {
                 constructor(n,geojs) {
                     this.ptr = n;
                     this.geojs = geojs;
                 }
             }
-
             class pop_data {
                 constructor(loc,state,obv,water,time,stat) {
                     this.loc = loc;
@@ -437,7 +445,13 @@
             this.$eventHub.$on('opacityRain', this.changeOpacity);
             this.$eventHub.$on('opacityPop', this.changeOpacity);
             this.$eventHub.$on('opacityPrecip', this.changeOpacity);
+            this.$eventHub.$on('search_query', process_search);
+            this.$eventHub.$on('layer-on', set_layerOn);
         }
+    }
+    function set_layerOn() {
+        console.log('layer 2 reference changed!');
+        layer_2 = !layer_2;
     }
     //
     function changeOpacity(opacity, layer){
@@ -452,6 +466,39 @@
         //  else {
         //     gaugeLayer.setStyle({fillOpacity:newFill, opacity:newFill});
         // }
+    }
+    // query by latitude,longitude ONLY
+    function process_search(query) {
+        const key = 'taflMXnW81xKAuwS0kIC5tAHtoNjGcmh';
+        (async () => {
+            const response = await axios.get(`http://www.mapquestapi.com/geocoding/v1/address?key=${key}&location=${query}`);
+            console.log(response);
+            let latlng = response.data.results[0].locations[0].latLng;
+            if(layer_2) {
+                let opt = calc_opt(latlng.lat,latlng.lng,gauge_geojs);
+                movesMap.setView(L.latLng(opt.properties.lat_node, opt.properties.lng_node),11);
+            } else {
+                movesMap.setView(L.latLng(latlng.lat, latlng.lng), 11);
+            }
+        })();
+    }
+    function calc_opt(x,y,geojs) {
+        let min = 1000000000;
+        let opt = undefined;
+        for(let j = 0; j<geojs.length; ++j) {
+            let val = calc_dist(x,y,geojs[j]);
+            if(min > val) {
+                if(min == 0) continue;
+                min = val;
+                opt = geojs[j];
+            }
+        }
+        return opt;
+    }
+    function calc_dist(x,y,g2) {
+        let dx = g2.properties.lat_node-x;
+        let dy = g2.properties.lng_node-y;
+        return Math.sqrt(Math.pow(dx,2)+Math.pow(dy,2));
     }
 
     function changeLayer(layer) {
