@@ -52,7 +52,7 @@
                   class="sliderRight"
                   @change='onPrecip($event)'
                   v-model="opacity2"
-                  label="Precipitaion Change">
+                  label="Precipitation Change">
         </v-slider>
         <img src='precipitationLegend.png' width="216" height="180">
     </v-sheet>

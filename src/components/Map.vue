@@ -107,7 +107,7 @@
             // legend.addTo(movesMap);
 
             popDenseLayer = esri.featureLayer({
-                url:'http://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/Congressional_District_Demographics/FeatureServer/0',
+                url:'https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/Congressional_District_Demographics/FeatureServer/0',
                 simplifyFactor: .5,
                 precision: 10,
                 //may need to use a different property in order to fill polygons correctly

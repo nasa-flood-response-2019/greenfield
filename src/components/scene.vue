@@ -75,7 +75,7 @@
                             }
                         });
                         console.log("started Sceneview");
-                        console.log("Latitude: " + this.noX);
+                        console.log("Latitude: " + this.noX + ", Longitude: " + this.noY);
                         var view = new SceneView({
                             map: scene,
                             container: "viewDiv",
@@ -83,13 +83,13 @@
                                position: {
                                    x: this.noX,
                                    y: this.noY,
-                                   z: 2000,
+                                   z: 100,
                                    spatialreference: {
-                                       wkid: 102100,
+                                       wkid: 4326,
                                    }
                                },
                                tilt: 84,
-                               heading: 85
+                               heading: 60
                            }
                         });
                         console.log(this.noX);
