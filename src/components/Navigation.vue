@@ -233,12 +233,13 @@
                 console.log("layer on emitted");
                 if(layer[3] == 'esriSnowLayer'){
                     this.$eventHub.$emit('openSnow', 'sheet1');
-                    }else if(layer[3] == 'rainGaugesLayer'){
+                }else if(layer[3] == 'rainGaugesLayer'){
                     this.$eventHub.$emit('openRain', 'sheet3');
-                    }else if(layer[3] == 'popDenseLayer'){
+                }else if(layer[3] == 'popDenseLayer'){
                     this.$eventHub.$emit('openPop', 'sheet2');
-                    }else{
-                    this.$eventHub.$emit('openPercip', 'sheet4');
+                }else{
+                    this.$eventHub.$emit('openPrecip', 'sheet4');
+                    console.log("openPrecip emitted");
                 }
             },
             openAbout: function(){

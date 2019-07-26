@@ -2,10 +2,10 @@
     <v-container v-show="testFlg">
         <v-sheet id="sheet1"
                  color="grey lighten-3"
-                 height="500"
-                 width="500"
+                 height="350"
+                 width="450"
         >
-        <v-btn @click="refreshMap()" id="refreshBtn" fab dark color="teal darken-1">Refresh</v-btn>
+        <v-btn @click="refreshMap()" id="refreshBtn" fab dark color="teal darken-1"><v-icon>refresh</v-icon></v-btn>
         <div id="viewDiv" class="esri-widget"></div>
         </v-sheet>
     </v-container>
