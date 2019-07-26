@@ -228,15 +228,18 @@
             //     this.$eventHub.$emit('resetMap');
             // },
             emitToggleLayer: function(layer) {
-                // if(!layer[2]) {
-                //     this.$eventHub.$emit('layerOn', layer);
-                //     console.log("layer on emitted");
-                // }
-                // else
-                //     this.$eventHub.$emit('layerOff', layer);
                 this.$eventHub.$emit('togglemLayer', layer);
                 this.$eventHub.$emit('layer-on', layer[0] === 'Rain Gauges');
                 console.log("layer on emitted");
+                if(layer[3] == 'esriSnowLayer'){
+                    this.$eventHub.$emit('openSnow', 'sheet1');
+                    }else if(layer[3] == 'rainGaugesLayer'){
+                    this.$eventHub.$emit('openRain', 'sheet3');
+                    }else if(layer[3] == 'popDenseLayer'){
+                    this.$eventHub.$emit('openPop', 'sheet2');
+                    }else{
+                    this.$eventHub.$emit('openPercip', 'sheet4');
+                }
             },
             openAbout: function(){
                 this.$eventHub.$emit('openAbout');
