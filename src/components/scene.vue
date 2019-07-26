@@ -2,9 +2,10 @@
     <v-container v-show="testFlg">
         <v-sheet id="sheet1"
                  color="grey lighten-3"
-                 height="350"
-                 width="350"
+                 height="500"
+                 width="500"
         >
+        <v-btn @click="refreshMap()" id="refreshBtn" fab dark color="teal darken-1">Refresh</v-btn>
         <div id="viewDiv" class="esri-widget"></div>
         </v-sheet>
     </v-container>
@@ -16,15 +17,10 @@
 
     let noX;
     let noY;
-    let z0;
+    let kachow;
 
     export default {
         name: "Scene",
-        // props: {
-        //     x0: Number,
-        //     y0: Number,
-        //     z0: Number
-        // },
         data () {
             return {
                 volume: 10,
@@ -76,14 +72,16 @@
                         });
                         console.log("started Sceneview");
                         console.log("Latitude: " + this.noX + ", Longitude: " + this.noY);
-                        var view = new SceneView({
+                        this.kachow = new SceneView({
                             map: scene,
                             container: "viewDiv",
                             camera: {
                                position: {
-                                   x: this.noX,
-                                   y: this.noY,
-                                   z: 100,
+                                //    x: this.noY,
+                                //    y: this.noX,
+                                    x: -93.91242,
+                                    y: 29.946438,
+                                    z: 60,
                                    spatialreference: {
                                        wkid: 4326,
                                    }
@@ -92,20 +90,37 @@
                                heading: 60
                            }
                         });
-                        console.log(this.noX);
                         console.log("built Sceneview");
                     }).catch(e => {
                     console.log(e);
                 });
-            }
-
-        },
-        // created()
-        // {
-        //     this.$eventHub.$on('openScene', this.sceneOpen1);
-        //     //document.getElementById("sheet1").style.display = 'none';
-        // }
+            },
+            refreshMap() {
+                loadModules(['esri/views/SceneView', 'esri/config', 'esri/WebScene', 'esri/Camera'])
+                    .then(([SceneView, esriConfig, WebScene, Camera]) => {
+                        var cam = new Camera({
+                               position: {
+                                   x: this.noY,
+                                   y: this.noX,
+                                    // x: -93.91242,
+                                    // y: 29.946438,
+                                    z: 60,
+                                   spatialreference: {
+                                       wkid: 4326,
+                                   }
+                               },
+                               tilt: 84,
+                               heading: 60      
+                        })
+                        this.kachow.camera = cam;
+                        console.log("built Sceneview");
+                    }).catch(e => {
+                    console.log(e);
+                });
+            },
+        }
     }
+    // }
 </script>
 <style scoped>
     #sheet1{

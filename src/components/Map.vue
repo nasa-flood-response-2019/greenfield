@@ -141,7 +141,6 @@
                     const response = await axios.get('http://129.116.70.166/ida_gauges/api/ahps/gauges/');
                     let geojs = response.data.features;
                     gauge_geojs=geojs;
-                    console.log(gauge_geojs);
                     let lyr = L.geoJSON();//.addTo(movesMap);
                     for(let i = 0; i<geojs.length; ++i) {
                         lyr.addData(geojs[i]);
@@ -163,15 +162,6 @@
                             mkr.bindPopup(gen_vue_comp(opt)).openPopup();
                         }
                     });
-                    /*
-                    var poiLayers = L.layerGroup([googleImageryLayer,esriAerialsLayer,esriStreetsLayer,]);
-                    L.control.search({
-                        position:'top',
-                        layer: poiLayers,
-                        initial: false,
-                        zoom: 11,
-                        marker: false
-                    }).addTo(movesMap); */
                 })()
             }
             class hashmap{
@@ -472,7 +462,6 @@
         const key = 'taflMXnW81xKAuwS0kIC5tAHtoNjGcmh';
         (async () => {
             const response = await axios.get(`http://www.mapquestapi.com/geocoding/v1/address?key=${key}&location=${query}`);
-            console.log(response);
             let latlng = response.data.results[0].locations[0].latLng;
             if(layer_2) {
                 let opt = calc_opt(latlng.lat,latlng.lng,gauge_geojs);
