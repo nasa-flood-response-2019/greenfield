@@ -40,7 +40,7 @@
     "leaflet-tilelayer-wmts": "^1.0.0",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
-    "postcss": "^7.0.14",
+    "postcss": "^8.2.10",
     "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
     "postcss-url": "^8.0.0",
